@@ -1,4 +1,4 @@
-@font-face{font-family:"JX";src:url(title.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"JX";src:local("jf-jinxuanlatte-2.1 Bold"),local("jf-jinxuanlatte-2.1"),url(title.woff2) format("woff2");font-weight:700;font-display:swap}
 @font-face{font-family:"GS";src:url(body.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Jost";src:url(jost.woff2) format("woff2");font-weight:400}
 @font-face{font-family:"Corm";src:url(corm.woff2) format("woff2");font-weight:500;font-style:italic}

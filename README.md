@@ -8,3 +8,5 @@
 - `assets/` 樣式、字型（已子集化）、圖片
 
 原始檔與產生腳本在專案資料夾「風格研究所官網/src」（build_multi.py）。
+
+字型：標題與內文用源泉圓體（GenSen Rounded，SIL OFL 1.1，見 assets/FONT-LICENSE-OFL.txt）；英文 Jost、Cormorant Garamond（OFL）。
