@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>課程報名｜風格研究所</title>
-<meta name="description" content="風格研究所 Style Lab 課程報名：短影音剪輯實戰工作坊、Claude 初學者課、14 天短影音陪跑班。">
+<meta name="description" content="風格研究所 Style Lab 課程報名：短影音剪輯實戰工作坊、Claude 基本教學、14 天短影音陪跑班。">
 <meta property="og:title" content="課程報名｜風格研究所">
 <meta property="og:image" content="assets/p-01.jpg">
 <link rel="icon" href="assets/logo.png">
@@ -77,7 +77,7 @@
             <button type="button" class="btn btn-line" id="clearWs" style="justify-self:start;padding:6px 16px;font-size:13px" hidden>不選工作坊</button>
 
             <div class="group-label">AI 課程</div>
-            <label class="pick"><input type="checkbox" name="items" value="claude" data-price="3500"><span><b>Claude 初學者課（2 小時）</b><small>可加購在工作坊後面，也可以單獨報名，價格一樣</small></span><span class="price">NT$3,500</span></label>
+            <label class="pick"><input type="checkbox" name="items" value="claude" data-price="3500"><span><b>Claude 基本教學（2 小時）</b><small>單獨報名 NT$3,500；搭配任一工作坊方案加購只要 NT$3,000</small></span><span class="price" id="claudePrice">NT$3,500</span></label>
 
             <div class="group-label">陪跑</div>
             <label class="pick"><input type="checkbox" name="items" value="coach" data-price="3500"><span><b>14 天短影音陪跑班<span class="flag">先登記</span></b><small>開班日期還在排，先登記的人會第一個收到通知，確認日期後才需要付款</small></span><span class="price">NT$3,500</span></label>
@@ -160,6 +160,10 @@
     return Array.prototype.slice.call(f.querySelectorAll('input[name=ws]:checked,input[name=items]:checked'));
   }
   function refresh() {
+    var wsOn = !!f.querySelector('input[name=ws]:checked');
+    var cl = f.querySelector('input[value=claude]');
+    cl.dataset.price = wsOn ? '3000' : '3500';
+    document.getElementById('claudePrice').textContent = wsOn ? '加購 NT$3,000' : 'NT$3,500';
     var sum = picked().reduce(function (s, i) { return s + Number(i.dataset.price || 0); }, 0);
     document.getElementById('total').textContent = 'NT$' + sum.toLocaleString('en-US');
     var hasWs = !!f.querySelector('input[name=ws]:checked');
