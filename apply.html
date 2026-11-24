@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>課程報名｜風格研究所</title>
+<meta name="description" content="風格研究所 Style Lab 課程報名：短影音剪輯實戰工作坊、Claude 初學者課、14 天短影音陪跑班。">
+<meta property="og:title" content="課程報名｜風格研究所">
+<meta property="og:image" content="assets/p-01.jpg">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.apply{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:40px;align-items:start}
+.form{background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px 26px;display:grid;gap:26px}
+.form fieldset{border:0;margin:0;padding:0;display:grid;gap:12px}
+.form legend{font-family:var(--f-title);font-size:19px;margin-bottom:6px;padding:0}
+.form legend small{font-family:var(--f-body);font-size:13px;color:var(--smoke);margin-left:6px}
+.pick{display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s}
+.pick:hover{border-color:rgba(163,140,121,.6)}
+.pick input{width:18px;height:18px;margin:4px 0 0;accent-color:var(--charcoal)}
+.pick b{font-weight:400;display:block}
+.pick small{display:block;color:var(--smoke);font-size:13px;line-height:1.6}
+.pick .price{font-family:var(--f-num);font-size:20px;white-space:nowrap}
+.pick:has(input:checked){border-color:var(--charcoal);background:var(--ivory)}
+.pick .flag{display:inline-block;font-size:12px;background:var(--champ);color:#fff;border-radius:999px;padding:0 10px;margin-left:6px;vertical-align:2px}
+.group-label{font-size:13px;color:var(--champ);letter-spacing:.08em;margin-top:6px}
+.field{display:grid;gap:6px}
+.field label{font-size:14px}
+.field label i{font-style:normal;color:#a0584b;margin-left:2px}
+.field input,.field textarea,.field select{font:inherit;font-size:16px;color:var(--charcoal);background:#fff;border:1px solid rgba(72,73,75,.28);border-radius:12px;padding:11px 14px;width:100%}
+.field textarea{min-height:96px;resize:vertical}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--champ);outline-offset:1px;border-color:transparent}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--smoke)}
+.check input{width:18px;height:18px;margin-top:4px;accent-color:var(--charcoal)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.err{color:#a0584b;font-size:14px;min-height:1em}
+.total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:16px}
+.total b{font-family:var(--f-num);font-weight:500;font-size:30px}
+.side{display:grid;gap:16px;position:sticky;top:96px}
+.side .hero-card h3{margin-top:10px}
+.side ol{margin:12px 0 0;padding-left:20px;display:grid;gap:8px;font-size:15px}
+.side .hero-card ol li{display:list-item;border:0;padding:0;grid-template-columns:none}
+.done{background:#fff;border:1px solid var(--line);border-radius:22px;padding:40px 28px;text-align:center;display:grid;gap:14px;justify-items:center}
+.done .ok{width:56px;height:56px;border-radius:50%;background:var(--charcoal);color:#fff;display:grid;place-items:center;font-size:26px}
+@media (max-width:860px){.apply{grid-template-columns:1fr}.side{position:static}.row2{grid-template-columns:1fr}.pick{grid-template-columns:22px 1fr}.pick .price{grid-column:2}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="風格研究所 首頁"><img src="assets/logo.png" alt="風格研究所 Logo"><span><b>風格研究所</b><small>STYLE LAB</small></span></a>
+    <nav class="links" aria-label="主選單"><a href="index.html#shop">指令包</a><a href="services.html">服務報價</a><a href="workshop.html">剪輯工作坊</a><a href="index.html#about">關於</a></nav>
+    <a class="btn btn-dark" href="services.html#quote">合作洽詢</a>
+  </div>
+</header>
+<main id="top">
+  <div class="paper sub-hero">
+    <div class="light" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="tag">Sign up · 課程報名</div>
+      <h1>選好想上的課，<br>剩下的我們來安排。</h1>
+      <p class="lead">可以一次選好幾項。送出後不用先付款，我們會在 1～2 天內用 LINE 或 Email 跟你確認時間、地點和付款方式。</p>
+    </div>
+  </div>
+
+  <section style="background:var(--ivory)">
+    <div class="wrap apply">
+      <div>
+        <form class="form" id="applyForm" novalidate>
+          <fieldset>
+            <legend>想報名的課程<small>可複選</small></legend>
+            <div class="group-label">短影音剪輯實戰工作坊（三選一）</div>
+            <label class="pick"><input type="radio" name="ws" value="ws_basic" data-price="5000"><span><b>基礎方案</b><small>3 小時剪輯實作，零基礎可以來</small></span><span class="price">NT$5,000</span></label>
+            <label class="pick"><input type="radio" name="ws" value="ws_adv" data-price="7300"><span><b>進階方案<span class="flag">含企劃</span></b><small>剪輯 3 小時＋企劃 1 小時</small></span><span class="price">NT$7,300</span></label>
+            <label class="pick"><input type="radio" name="ws" value="ws_pro" data-price="9800"><span><b>Pro 專屬一對一</b><small>含帳號定位與作品健檢</small></span><span class="price">NT$9,800</span></label>
+            <button type="button" class="btn btn-line" id="clearWs" style="justify-self:start;padding:6px 16px;font-size:13px" hidden>不選工作坊</button>
+
+            <div class="group-label">AI 課程</div>
+            <label class="pick"><input type="checkbox" name="items" value="claude" data-price="3500"><span><b>Claude 初學者課（2 小時）</b><small>可加購在工作坊後面，也可以單獨報名，價格一樣</small></span><span class="price">NT$3,500</span></label>
+
+            <div class="group-label">陪跑</div>
+            <label class="pick"><input type="checkbox" name="items" value="coach" data-price="3500"><span><b>14 天短影音陪跑班<span class="flag">先登記</span></b><small>開班日期還在排，先登記的人會第一個收到通知，確認日期後才需要付款</small></span><span class="price">NT$3,500</span></label>
+          </fieldset>
+
+          <fieldset>
+            <legend>你的聯絡資料</legend>
+            <div class="row2">
+              <div class="field"><label for="name">姓名<i>*</i></label><input id="name" name="name" autocomplete="name" maxlength="40" required></div>
+              <div class="field"><label for="email">Email<i>*</i></label><input id="email" name="email" type="email" autocomplete="email" maxlength="120" required></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="lineName">LINE 名稱</label><input id="lineName" name="lineName" maxlength="60" placeholder="方便我們在官方 LINE 認出你"></div>
+              <div class="field"><label for="phone">手機</label><input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="30"></div>
+            </div>
+            <div class="field"><label for="times">方便上課的時段</label><input id="times" name="times" maxlength="200" placeholder="例如：平日晚上、週六下午"></div>
+            <div class="field"><label for="note">想先問的問題</label><textarea id="note" name="note" maxlength="800" placeholder="例如：我完全沒剪過片可以嗎？想帶自己的素材來練習"></textarea></div>
+            <label class="check" id="invoiceRow" hidden><input type="checkbox" name="invoice" value="1"><span>工作坊需要開立發票（學費另加 5% 營業稅）</span></label>
+            <div class="hp" aria-hidden="true"><label>網站<input name="website" tabindex="-1" autocomplete="off"></label></div>
+          </fieldset>
+
+          <div class="total"><span class="muted">合計（未稅）</span><b id="total">NT$0</b></div>
+          <p class="err" id="err" role="alert"></p>
+          <button class="btn btn-dark" type="submit" id="submitBtn">送出報名</button>
+          <p class="muted" style="font-size:13px">送出後會寄一封確認信到你的 Email。資料只用來安排課程，不會給第三方。</p>
+        </form>
+
+        <div class="done" id="done" hidden>
+          <div class="ok" aria-hidden="true">✓</div>
+          <h2>收到你的報名了</h2>
+          <p class="muted">確認信已經寄到你的信箱（沒看到請找一下垃圾郵件）。<br>我們會在 1～2 天內聯絡你，想更快的話可以直接加官方 LINE。</p>
+          <a class="btn btn-dark" href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">加入官方 LINE</a>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="hero-card">
+          <div class="tag">How it works</div>
+          <h3>報名之後</h3>
+          <ol>
+            <li>收到確認信</li>
+            <li>1～2 天內用 LINE 或 Email 跟你約時間</li>
+            <li>時間確定後再付款，名額才算保留</li>
+          </ol>
+        </div>
+        <p class="muted" style="font-size:14px">課程內容細節：<a href="workshop.html">剪輯工作坊</a>。還在猶豫的話，先到 <a href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">官方 LINE</a> 傳「幫我挑」，回答兩個問題就知道適合哪一堂。</p>
+      </aside>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div style="max-width:520px">
+        <div class="tag" style="color:#C2AE9D">Let's work together</div>
+        <h2 style="margin:12px 0 16px">有想拍的品牌故事，<br>私訊我們聊聊。</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-light" href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">加入官方 LINE</a><a class="btn btn-ghost" href="https://portaly.cc/zw.weiwei" target="_blank" rel="noopener">作品集</a></div>
+      </div>
+      <div class="contact">
+        <span class="logo-chip"><img src="assets/logo.png" alt="風格研究所 Logo"></span>
+        <span><b>風格研究所 STYLE LAB</b></span>
+        <span>Instagram　<a href="https://www.instagram.com/_stylelab.2025/" target="_blank" rel="noopener">@_stylelab.2025</a>・<a href="https://www.instagram.com/zw______/" target="_blank" rel="noopener">@zw______</a></span>
+        <span>作品集　portaly.cc/zw.weiwei</span>
+      </div>
+    </div>
+    <div class="legal"><span>© 2026 風格研究所 Style Lab</span><span>服務條款・隱私權政策・退款說明</span></div>
+  </div>
+</footer>
+<script>
+(function () {
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzaYMatCqyk9lKMo4DRUhZGe8KMpsBTJtGokkbU8hOW1Y3kqMMfKmeHf8yXjb-DAOB7/exec';
+  var f = document.getElementById('applyForm');
+  var err = document.getElementById('err');
+  var btn = document.getElementById('submitBtn');
+  var clearWs = document.getElementById('clearWs');
+  var invoiceRow = document.getElementById('invoiceRow');
+
+  function picked() {
+    return Array.prototype.slice.call(f.querySelectorAll('input[name=ws]:checked,input[name=items]:checked'));
+  }
+  function refresh() {
+    var sum = picked().reduce(function (s, i) { return s + Number(i.dataset.price || 0); }, 0);
+    document.getElementById('total').textContent = 'NT$' + sum.toLocaleString('en-US');
+    var hasWs = !!f.querySelector('input[name=ws]:checked');
+    clearWs.hidden = !hasWs;
+    invoiceRow.hidden = !hasWs;
+  }
+  f.addEventListener('change', refresh);
+  clearWs.addEventListener('click', function () {
+    f.querySelectorAll('input[name=ws]').forEach(function (i) { i.checked = false; });
+    refresh();
+  });
+
+  // 從其他頁帶參數進來：apply.html?item=coach、?item=claude、?item=ws_basic
+  var q = new URLSearchParams(location.search).get('item');
+  if (q) q.split(',').forEach(function (v) {
+    var el = f.querySelector('input[value="' + v.replace(/[^a-z_]/g, '') + '"]');
+    if (el) el.checked = true;
+  });
+  refresh();
+
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.textContent = '';
+    var items = picked().map(function (i) { return i.value; });
+    var el = f.elements;
+    var name = el['name'].value.trim(), email = el['email'].value.trim();
+    if (!items.length) { err.textContent = '請至少選一堂課。'; return; }
+    if (!name) { err.textContent = '請填姓名。'; el['name'].focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Email 格式好像不對，再檢查一下。'; el['email'].focus(); return; }
+
+    var body = new URLSearchParams();
+    body.set('form', 'apply');
+    body.set('items', items.join(','));
+    ['name', 'email', 'lineName', 'phone', 'times', 'note', 'website'].forEach(function (k) { body.set(k, el[k].value.trim()); });
+    body.set('invoice', el['invoice'].checked && !invoiceRow.hidden ? '1' : '');
+    body.set('source', document.referrer ? document.referrer.slice(0, 200) : '');
+
+    btn.disabled = true; btn.textContent = '送出中…';
+    fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body: body })
+      .then(function () {
+        f.hidden = true;
+        document.getElementById('done').hidden = false;
+        window.scrollTo({ top: document.getElementById('done').getBoundingClientRect().top + window.scrollY - 120, behavior: 'smooth' });
+      })
+      .catch(function () {
+        err.textContent = '網路好像斷了，請再按一次；一直失敗的話，直接到官方 LINE 跟我們說。';
+        btn.disabled = false; btn.textContent = '送出報名';
+      });
+  });
+})();
+</script>
+</body>
+</html>
