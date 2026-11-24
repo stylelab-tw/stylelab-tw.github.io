@@ -3,7 +3,8 @@
  *   LINE414_TOKEN  風格研究所官方 LINE（@414wudac）Messaging API 的 Channel access token（薇薇自己貼）
  *   LINE414_HOOK   Webhook 網址上的暗號（setupCourseRemind 自動產生）
  *   LINE414_FORWARD（選填）原本 Webhook 接的 Make 網址，收到的事件會原封轉過去
- * Bot.gs 的 doPost 最前面加：if (e && e.parameter && e.parameter.t && e.parameter.t === PROPS.getProperty('LINE414_HOOK')) return lineHook414_(e);
+ * Bot.gs 的 doPost 最前面加：if (isLine414_(e)) return lineHook414_(e);
+ * Webhook 網址＝本網頁應用程式的 exec 網址（不用暗號）；用事件裡的 destination 認出是 @414wudac。
  * 一次性：在編輯器執行 setupCourseRemind（補欄位、建待排課分頁、建每天約 12 點的觸發、印出 Webhook 網址）。
  * 測試：在編輯器執行 remindNow（立刻跑一次提醒＋今日課務，不用等 12 點）。
  */
@@ -80,6 +81,22 @@ function line414_(path, body) {
 }
 function lineReply414_(token, text) { line414_('reply', { replyToken: token, messages: [{ type: 'text', text: text }] }); }
 function linePush414_(to, text) { line414_('push', { to: to, messages: [{ type: 'text', text: text }] }); }
+
+function isLine414_(e) {
+  if (!e) return false;
+  if (e.parameter && e.parameter.t && e.parameter.t === PROPS.getProperty('LINE414_HOOK')) return true;
+  var dest = PROPS.getProperty('LINE414_DEST'), raw = e.postData && e.postData.contents;
+  if (!dest || !raw || raw.charAt(0) !== '{') return false;
+  try { return JSON.parse(raw).destination === dest; } catch (err) { return false; }
+}
+/* 薇薇貼好 LINE414_TOKEN 後執行一次：記下 @414wudac 的 bot ID，Webhook 才認得 */
+function setupLine414() {
+  var res = UrlFetchApp.fetch('https://api.line.me/v2/bot/info', { headers: { Authorization: 'Bearer ' + PROPS.getProperty('LINE414_TOKEN') }, muteHttpExceptions: true });
+  var info = JSON.parse(res.getContentText());
+  if (!info.userId) throw new Error('金鑰不對：' + res.getContentText().slice(0, 200));
+  PROPS.setProperty('LINE414_DEST', info.userId);
+  Logger.log('OK：' + info.displayName + '（' + info.basicId + '）。Webhook 網址：' + ScriptApp.getService().getUrl());
+}
 
 function lineHook414_(e) {
   var raw = (e.postData && e.postData.contents) || '{}';
