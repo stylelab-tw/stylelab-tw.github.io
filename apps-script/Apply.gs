@@ -79,7 +79,7 @@ function applySave_(p) {
         : '我們會在 1～2 天內用 LINE 或 Email 跟你確認上課時間、地點和付款方式，時間確定後再付款。' +
           (keys.indexOf('coach') >= 0 ? '\n陪跑班的開班日期確定後，也會第一個通知你。' : '')) +
       (invoice ? '\n\n你有勾選需要發票：工作坊學費另加 5% 營業稅，確認時會一起跟你說金額。' : '') +
-      (coachOnly ? '' : '\n\n想在 LINE 收到課前提醒：打開下面網址，按送出就完成綁定\n' + bindUrl_(row['綁定碼'])) +
+      (coachOnly || PROPS.getProperty('LINE_BIND_ON') !== '1' ? '' : '\n\n想在 LINE 收到課前提醒：打開下面網址，按送出就完成綁定\n' + bindUrl_(row['綁定碼'])) +
       '\n\n想更快聯絡，可以直接加官方 LINE：https://lin.ee/Q5kmamu\n\n' + prop_('TEACHER') + '\n' + prop_('BRAND') });
   } catch (err) { Logger.log('官網報名通知信失敗：' + err.message); }
   return { ok: true, id: row.id };

@@ -62,7 +62,7 @@ function applyMailHtml_(o) {
     '<tr><td style="' + F + 'font-size:16px;font-weight:700;color:' + C.ink + ';padding-bottom:14px">接下來會這樣進行</td></tr>' +
     '<tr><td><table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + stepHtml + '</table></td></tr>' +
     // 綁定 LINE 課前提醒
-    (o.bindCode && !coachOnly ? '<tr><td style="padding:4px 0 18px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C.soft + ';border-radius:16px"><tr><td style="padding:18px 20px;' + F + '">' +
+    (o.bindCode && !coachOnly && PROPS.getProperty('LINE_BIND_ON') === '1' ? '<tr><td style="padding:4px 0 18px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C.soft + ';border-radius:16px"><tr><td style="padding:18px 20px;' + F + '">' +
       '<div style="font-size:15px;font-weight:700;color:' + C.ink + '">想在 LINE 收到課前提醒？</div>' +
       '<div style="font-size:13px;color:' + C.smoke + ';line-height:1.7;margin:4px 0 12px">按下面按鈕會打開官方 LINE，訊息已經幫你填好，按送出就完成綁定。上課前 5 天和前 1 天會提醒你。</div>' +
       '<a href="' + bindUrl_(o.bindCode) + '" style="display:inline-block;background:' + C.champ + ';color:#ffffff;text-decoration:none;border-radius:999px;padding:11px 26px;font-size:14px;font-weight:600;' + F + '">綁定 LINE 課前提醒</a>' +
