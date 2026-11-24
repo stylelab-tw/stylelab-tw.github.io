@@ -12,7 +12,8 @@ var APPLY_ITEMS = {
 };
 var APPLY_SHORT = { ws_basic: '工作坊基礎', ws_adv: '工作坊進階', ws_pro: '工作坊Pro', claude: 'Claude課', coach: '陪跑班登記' };
 var APPLY_PRICE = { ws_basic: 5000, ws_adv: 7300, ws_pro: 9800, claude: 3500, coach: 3500 };
-var APPLY_HEAD = ['id', 'ts', 'items', 'total', 'name', 'email', 'lineName', 'phone', 'times', 'invoice', 'note', 'source', 'status'];
+var APPLY_HEAD = ['id', 'ts', 'items', 'total', 'name', 'email', 'lineName', 'phone', 'times', 'invoice', 'note', 'source', 'status',
+  '綽號', '綁定碼', '上課日期', '上課時間', '上課地點', 'LINE', 'LINE綁定時間', '提醒對應日期', '前5天提醒', '前1天提醒'];
 
 function applySheet_() {
   var ss = SpreadsheetApp.openById(PROPS.getProperty('SHEET_ID'));
@@ -21,6 +22,8 @@ function applySheet_() {
     sh = ss.insertSheet('Applies');
     sh.appendRow(APPLY_HEAD);
     sh.setFrozenRows(1);
+  } else if (sh.getLastColumn() < APPLY_HEAD.length) {
+    sh.getRange(1, 1, 1, APPLY_HEAD.length).setValues([APPLY_HEAD]);   // 舊表補新欄位標題
   }
   return sh;
 }
@@ -53,7 +56,8 @@ function applySave_(p) {
     id: newId_('a'), ts: nowIso_(), items: keys.map(function (k) { return APPLY_ITEMS[k]; }).join('\n'), total: total,
     name: name, email: email, lineName: String(p.lineName || '').trim().slice(0, 60), phone: String(p.phone || '').trim().slice(0, 30),
     times: String(p.times || '').trim().slice(0, 200), invoice: invoice, note: String(p.note || '').trim().slice(0, 800),
-    source: String(p.source || '').slice(0, 200), status: '待聯絡'
+    source: String(p.source || '').slice(0, 200), status: '待聯絡',
+    '綽號': String(p.nick || '').trim().slice(0, 20), '綁定碼': newBindCode_()
   };
   withLock_(function () { applySheet_().appendRow(APPLY_HEAD.map(function (h) { return safeCell_(row[h]); })); });
 
@@ -62,12 +66,12 @@ function applySave_(p) {
     var me = Session.getEffectiveUser().getEmail();
     if (me) sendMail_(me, '【官網報名】' + name + '｜' + keys.map(function (k) { return APPLY_SHORT[k]; }).join('＋') + '｜NT$' + total.toLocaleString(),
       '官網有新的課程報名：\n\n' + list + '\n合計（未稅）：NT$' + total.toLocaleString() + (invoice ? '（要開發票，工作坊另加 5% 營業稅）' : '') +
-      '\n\n姓名：' + name + '\nEmail：' + email + '\nLINE：' + (row.lineName || '（未填）') + '\n手機：' + (row.phone || '（未填）') +
+      '\n\n姓名：' + name + (row['綽號'] ? '（綽號：' + row['綽號'] + '）' : '') + '\nEmail：' + email + '\nLINE：' + (row.lineName || '（未填）') + '\n手機：' + (row.phone || '（未填）') +
       '\n方便時段：' + (row.times || '（未填）') + '\n問題：' + (row.note || '（無）') +
       '\n\n全部報名在試算表「Applies」分頁：https://docs.google.com/spreadsheets/d/' + PROPS.getProperty('SHEET_ID'));
     var coachOnly = keys.length === 1 && keys[0] === 'coach';
     MailApp.sendEmail({ to: email, subject: '【風格研究所】已收到你的課程報名', name: prop_('BRAND'),
-      htmlBody: applyMailHtml_({ name: name, keys: keys, invoice: !!invoice }),
+      htmlBody: applyMailHtml_({ name: row['綽號'] || name, keys: keys, invoice: !!invoice, bindCode: row['綁定碼'] }),
       body:
       name + ' 你好：\n\n謝謝你報名，我們已經收到了：\n' + list + '\n\n' +
       (coachOnly
@@ -75,6 +79,7 @@ function applySave_(p) {
         : '我們會在 1～2 天內用 LINE 或 Email 跟你確認上課時間、地點和付款方式，時間確定後再付款。' +
           (keys.indexOf('coach') >= 0 ? '\n陪跑班的開班日期確定後，也會第一個通知你。' : '')) +
       (invoice ? '\n\n你有勾選需要發票：工作坊學費另加 5% 營業稅，確認時會一起跟你說金額。' : '') +
+      (coachOnly ? '' : '\n\n想在 LINE 收到課前提醒：打開下面網址，按送出就完成綁定\n' + bindUrl_(row['綁定碼'])) +
       '\n\n想更快聯絡，可以直接加官方 LINE：https://lin.ee/Q5kmamu\n\n' + prop_('TEACHER') + '\n' + prop_('BRAND') });
   } catch (err) { Logger.log('官網報名通知信失敗：' + err.message); }
   return { ok: true, id: row.id };

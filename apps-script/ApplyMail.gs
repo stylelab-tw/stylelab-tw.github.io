@@ -61,6 +61,13 @@ function applyMailHtml_(o) {
     '<tr><td style="padding:18px 0 14px"><div style="height:1px;background:' + C.line + '"></div></td></tr>' +
     '<tr><td style="' + F + 'font-size:16px;font-weight:700;color:' + C.ink + ';padding-bottom:14px">接下來會這樣進行</td></tr>' +
     '<tr><td><table role="presentation" width="100%" cellpadding="0" cellspacing="0">' + stepHtml + '</table></td></tr>' +
+    // 綁定 LINE 課前提醒
+    (o.bindCode && !coachOnly ? '<tr><td style="padding:4px 0 18px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C.soft + ';border-radius:16px"><tr><td style="padding:18px 20px;' + F + '">' +
+      '<div style="font-size:15px;font-weight:700;color:' + C.ink + '">想在 LINE 收到課前提醒？</div>' +
+      '<div style="font-size:13px;color:' + C.smoke + ';line-height:1.7;margin:4px 0 12px">按下面按鈕會打開官方 LINE，訊息已經幫你填好，按送出就完成綁定。上課前 5 天和前 1 天會提醒你。</div>' +
+      '<a href="' + bindUrl_(o.bindCode) + '" style="display:inline-block;background:' + C.champ + ';color:#ffffff;text-decoration:none;border-radius:999px;padding:11px 26px;font-size:14px;font-weight:600;' + F + '">綁定 LINE 課前提醒</a>' +
+      '<div style="font-size:12px;color:' + C.smoke + ';margin-top:10px">你的綁定碼：' + o.bindCode + '</div>' +
+      '</td></tr></table></td></tr>' : '') +
     // LINE 按鈕
     '<tr><td align="center" style="padding:10px 0 6px">' +
     '<a href="https://lin.ee/Q5kmamu" style="display:inline-block;background:' + C.smoke + ';color:#ffffff;text-decoration:none;border-radius:999px;padding:13px 34px;font-size:15px;font-weight:600;' + F + '">加官方 LINE，聯絡更快</a></td></tr>' +
@@ -71,4 +78,50 @@ function applyMailHtml_(o) {
     mailEsc_(prop_('TEACHER')) + '｜' + mailEsc_(prop_('BRAND')) + '<br>' +
     '<a href="https://stylelab-tw.github.io" style="color:' + C.champ + ';text-decoration:none">stylelab-tw.github.io</a></td></tr>' +
     '</table></td></tr></table></body></html>';
+}
+
+/* ===== 課前提醒信、今日課務信（同一套版型） ===== */
+function mailShell_(kicker, title, inner) {
+  var C = { bg: '#E6E6E5', card: '#FAFAF9', ink: '#48494B', smoke: '#6B6D70', champ: '#A38C79' };
+  var F = "font-family:'PingFang TC','Noto Sans TC','Microsoft JhengHei',Helvetica,Arial,sans-serif;";
+  return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:' + C.bg + '">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + C.bg + '"><tr><td align="center" style="padding:28px 12px">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px">' +
+    '<tr><td align="center" style="padding:0 0 22px"><img src="' + MAIL_ASSET + 'logo.png" width="96" alt="風格研究所" style="display:block;width:96px;height:auto;border:0">' +
+    '<div style="' + F + 'font-size:12px;letter-spacing:5px;color:' + C.smoke + ';margin-top:10px">風格研究所 STYLE LAB</div></td></tr>' +
+    '<tr><td style="background:' + C.card + ';border-radius:22px;padding:34px 28px 26px;' + F + '">' +
+    '<div style="font-size:13px;letter-spacing:3px;color:' + C.champ + ';padding-bottom:8px">' + kicker + '</div>' +
+    '<div style="font-size:26px;font-weight:700;color:' + C.ink + ';line-height:1.4;padding-bottom:14px">' + title + '</div>' + inner +
+    '</td></tr><tr><td align="center" style="padding:22px 0 0;' + F + 'font-size:13px;color:' + C.smoke + ';line-height:1.8">' +
+    mailEsc_(prop_('TEACHER')) + '｜' + mailEsc_(prop_('BRAND')) + '<br><a href="https://stylelab-tw.github.io" style="color:' + C.champ + ';text-decoration:none">stylelab-tw.github.io</a></td></tr>' +
+    '</table></td></tr></table></body></html>';
+}
+
+function remindMailHtml_(row, ds, kind, m) {
+  var ink = '#48494B', smoke = '#6B6D70', soft = '#F1EFEC';
+  var keys = rowKeys_(row), img = keys.length ? APPLY_IMG[keys[0]] : '';
+  var line = function (k, v) { return '<tr><td width="64" style="padding:6px 0;font-size:14px;color:' + smoke + ';vertical-align:top">' + k + '</td><td style="padding:6px 0;font-size:15px;color:' + ink + ';line-height:1.6">' + mailEsc_(v) + '</td></tr>'; };
+  var inner = '<div style="font-size:15px;color:' + ink + ';line-height:1.8;padding-bottom:18px">' + mailEsc_(m.call) + ' 你好，' + (kind === 1 ? '明天就要上課囉，期待見到你！' : '提醒你，再 5 天就要上課囉。') + '</div>' +
+    (img ? '<img src="' + MAIL_ASSET + img + '" width="504" alt="" style="display:block;width:100%;max-width:504px;height:auto;border-radius:14px;border:0;margin-bottom:16px">' : '') +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + soft + ';border-radius:16px"><tr><td style="padding:14px 20px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0">' +
+    line('課程', m.course) + line('時間', niceDate_(ds) + ' ' + timeStr_(row['上課時間'])) + line('地點', m.place) + (m.prep ? line('要帶', m.prep) : '') +
+    '</table></td></tr></table>' +
+    '<div style="font-size:14px;color:' + smoke + ';line-height:1.8;padding:18px 0 14px">時間不方便的話，直接在官方 LINE 跟我們說就可以了。</div>' +
+    '<div style="text-align:center;padding-bottom:6px"><a href="https://lin.ee/Q5kmamu" style="display:inline-block;background:#6B6D70;color:#ffffff;text-decoration:none;border-radius:999px;padding:13px 34px;font-size:15px;font-weight:600">打開官方 LINE</a></div>';
+  return mailShell_(kind === 1 ? 'SEE YOU TOMORROW' : 'CLASS REMINDER', kind === 1 ? '明天上課提醒' : niceDate_(ds) + ' 上課提醒', inner);
+}
+
+function digestMailHtml_(res, pend, up) {
+  var ink = '#48494B', smoke = '#6B6D70', soft = '#F1EFEC';
+  var h2 = function (t) { return '<div style="font-size:16px;font-weight:700;color:' + ink + ';padding:18px 0 8px">' + t + '</div>'; };
+  var li = function (t, warn) { return '<div style="font-size:14px;line-height:1.7;padding:8px 12px;margin-bottom:6px;border-radius:10px;background:' + (warn ? '#F6D5D0' : soft) + ';color:' + ink + '">' + t + '</div>'; };
+  var none = '<div style="font-size:14px;color:' + smoke + '">無</div>';
+  var inner = h2('還沒約時間：' + pend.length + ' 位') + (pend.length ? pend.map(function (x) {
+      return li((x.wait > 3 ? '⚠ ' : '') + '<b>' + mailEsc_(x.name) + '</b>' + (x.nick ? '（' + mailEsc_(x.nick) + '）' : '') + '｜' + x.course + '｜等 ' + x.wait + ' 天｜LINE ' + x.line + (x.phone ? '｜' + mailEsc_(x.phone) : ''), x.wait > 3);
+    }).join('') : none) +
+    h2('7 天內的課') + (up.length ? up.map(function (x) { return li(niceDate_(x.ds) + ' ' + mailEsc_(x.time) + '｜<b>' + mailEsc_(x.name) + '</b>｜' + x.course + '｜LINE ' + x.line); }).join('') : none) +
+    h2('今天寄出的提醒') + (res.sent.length ? res.sent.map(function (x) { return li(mailEsc_(x.name) + '｜' + x.course + '｜' + (x.kind === 1 ? '前 1 天' : '前 5 天') + '（' + x.how + '）'); }).join('') : none) +
+    (res.fails.length ? h2('寄送失敗') + res.fails.map(function (f) { return li(mailEsc_(f), true); }).join('') : '') +
+    '<div style="font-size:13px;color:' + smoke + ';padding-top:16px">約好時間後，到試算表「Applies」填上課日期、時間、地點就好。</div>';
+  return mailShell_('TODAY', '今日課務 ' + Utilities.formatDate(new Date(), TZ, 'M/d'), inner);
 }
