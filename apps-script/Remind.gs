@@ -2,6 +2,7 @@
  * 需要的指令碼屬性（Script Properties）：
  *   LINE414_TOKEN  風格研究所官方 LINE（@414wudac）Messaging API 的 Channel access token（薇薇自己貼）
  *   LINE414_HOOK   Webhook 網址上的暗號（setupCourseRemind 自動產生）
+ *   LINE414_FORWARD（選填）原本 Webhook 接的 Make 網址，收到的事件會原封轉過去
  * Bot.gs 的 doPost 最前面加：if (e && e.parameter && e.parameter.t && e.parameter.t === PROPS.getProperty('LINE414_HOOK')) return lineHook414_(e);
  * 一次性：在編輯器執行 setupCourseRemind（補欄位、建待排課分頁、建每天約 12 點的觸發、印出 Webhook 網址）。
  * 測試：在編輯器執行 remindNow（立刻跑一次提醒＋今日課務，不用等 12 點）。
@@ -81,8 +82,11 @@ function lineReply414_(token, text) { line414_('reply', { replyToken: token, mes
 function linePush414_(to, text) { line414_('push', { to: to, messages: [{ type: 'text', text: text }] }); }
 
 function lineHook414_(e) {
+  var raw = (e.postData && e.postData.contents) || '{}';
+  var fwd = PROPS.getProperty('LINE414_FORWARD');   // 原本接 Make 的網址：照樣轉一份過去，舊流程不受影響
+  if (fwd) { try { UrlFetchApp.fetch(fwd, { method: 'post', contentType: 'application/json', payload: raw, muteHttpExceptions: true }); } catch (err) { Logger.log('轉給 Make 失敗：' + err.message); } }
   try {
-    var body = JSON.parse((e.postData && e.postData.contents) || '{}');
+    var body = JSON.parse(raw);
     (body.events || []).forEach(function (ev) {
       if (ev.type !== 'message' || !ev.message || ev.message.type !== 'text' || !ev.source || !ev.source.userId) return;
       var text = String(ev.message.text).trim();
@@ -213,6 +217,7 @@ function remindNow() { dailyCourse(); }
 function setupCourseRemind() {
   var sh = applySheet_();
   if (!PROPS.getProperty('LINE414_HOOK')) PROPS.setProperty('LINE414_HOOK', Utilities.getUuid().replace(/-/g, ''));
+  if (!PROPS.getProperty('LINE414_FORWARD')) PROPS.setProperty('LINE414_FORWARD', 'https://hook.eu1.make.com/1c6qhrt8lbgg153x2xyu3k91i8mrucib');
   var t = applyRows_();
   t.rows.forEach(function (r) { if (!r['綁定碼']) setCell_(t, r, '綁定碼', newBindCode_()); });   // 舊報名補綁定碼
   // 待排課分頁：公式即時更新，填了上課日期就自動消失
