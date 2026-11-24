@@ -303,3 +303,19 @@ a.work:focus-visible .work-thumb{outline:2px solid var(--champ);outline-offset:4
 @media (max-width:860px){.works{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:480px){.works{gap:22px 12px}.work-meta h3{font-size:16px}.work-thumb.type i{font-size:40px}.ph-badge{font-size:11px;padding:5px 8px}}
 footer .logo-chip{justify-self:start}
+/* 作品集：數字卡 */
+.work-thumb.stat{display:flex;flex-direction:column;justify-content:flex-end;padding:22px;background:
+  radial-gradient(70% 60% at 15% 0%,#F6F6F5 0%,rgba(246,246,245,0) 70%),linear-gradient(165deg,#E3E3E2,#D2D3D2)}
+.work-thumb.stat .acc{position:absolute;left:18px;top:18px;font-size:13px;color:var(--smoke);border:1px solid rgba(72,73,75,.2);border-radius:999px;padding:4px 12px;background:rgba(255,255,255,.45)}
+.work-thumb.stat b{font-family:var(--f-num);font-style:italic;font-weight:500;font-size:clamp(40px,5vw,58px);line-height:1;color:var(--charcoal)}
+.work-thumb.stat i{font-style:normal;font-size:13px;letter-spacing:.12em;color:var(--champ);margin-top:6px}
+.work-thumb.stat.dark{background:linear-gradient(170deg,#4E4F52,#48494B 55%,#3F4042)}
+.work-thumb.stat.dark b{color:#F3F1EE}.work-thumb.stat.dark .acc{color:#D5D2CE;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06)}
+.work-thumb.stat.dark i{color:#C2AE9D}
+.works-facts{max-width:560px}
+@media (max-width:480px){.works-facts{grid-template-columns:1fr 1fr 1fr}.work-thumb.stat{padding:14px}.work-thumb.stat .acc{left:10px;top:10px;font-size:11px;padding:3px 8px}}
+.work-thumb.stat{aspect-ratio:1/1}
+.works-wide{grid-template-columns:repeat(4,minmax(0,1fr));gap:26px 18px}
+.works-wide .work-thumb.stat b{font-size:clamp(34px,3.6vw,48px)}
+@media (max-width:980px){.works-wide{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){.works-wide{grid-template-columns:repeat(2,minmax(0,1fr))}}
