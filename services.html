@@ -9,6 +9,123 @@
 <meta property="og:image" content="assets/p-01.jpg">
 <link rel="icon" href="assets/logo.png">
 <link rel="stylesheet" href="assets/style.css">
+<style>
+
+@font-face{font-family:"QXJX";src:local("jf-jinxuanlatte-2.1 Bold"),local("jf-jinxuanlatte-2.1"),url(assets/qx-title.woff2) format("woff2");font-weight:700;font-display:swap}
+.qx{--qxt:"QXJX","JX","PingFang TC",sans-serif;display:grid;grid-template-columns:1.15fr 1fr;gap:28px;align-items:start}
+@media(max-width:860px){.qx{grid-template-columns:1fr}}
+.qx>*{min-width:0}
+.qx-left{display:grid;gap:14px}
+.qx-step{display:grid;grid-template-columns:56px 1fr;gap:14px;background:var(--glass);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:20px 22px;box-shadow:0 18px 34px -26px rgba(40,40,42,.45)}
+@media(max-width:480px){.qx-step{grid-template-columns:1fr;gap:6px;padding:18px}}
+.qx-num{font-family:var(--f-num);font-size:38px;line-height:1;color:var(--champ);font-style:italic}
+.qx-body{min-width:0;display:grid;gap:12px}
+.qx-body h3{margin:0;font-family:var(--qxt);font-weight:700;font-size:22px;color:var(--charcoal);letter-spacing:.02em}
+.qx-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qx-opt{font:inherit;text-align:left;display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);background:rgba(255,255,255,.55);color:var(--charcoal);border-radius:16px;padding:12px 14px;cursor:pointer;transition:transform .15s,border-color .2s,background .2s;min-width:0}
+.qx-opt:hover{transform:translateY(-2px);border-color:var(--champ)}
+.qx-opt .qx-ic{flex:none;width:40px;height:40px;border-radius:12px;background:var(--ivory);display:grid;place-items:center}
+.qx-opt svg{width:24px;height:24px;fill:none;stroke:var(--charcoal);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.qx-ot{display:grid;min-width:0}.qx-ot b{font-family:var(--qxt);font-size:17px}.qx-ot small{font-size:12px;color:var(--smoke)}
+.qx-opt.on{background:var(--charcoal);border-color:var(--charcoal);color:var(--ivory)}.qx-opt.on small{color:#CFCBC6}.qx-opt.on .qx-ic{background:var(--champ)}.qx-opt.on svg{stroke:#fff}
+.qx-opt:focus-visible,.qx-go:focus-visible,.qx-inv:focus-within,.qx-add label:focus-within{outline:2px solid var(--champ);outline-offset:3px}
+.qx-count{display:flex;align-items:center;gap:16px}
+.qx-count input{flex:1;min-width:0;-webkit-appearance:none;appearance:none;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--champ) var(--p,0%),var(--warm) var(--p,0%))}
+.qx-count input::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:var(--charcoal);border:4px solid var(--ivory);box-shadow:0 3px 8px rgba(0,0,0,.3);cursor:pointer}
+.qx-count input::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--charcoal);border:4px solid var(--ivory)}
+.qx-n{white-space:nowrap;font-weight:700}.qx-n b{font-family:var(--f-num);font-size:40px;margin-right:4px;color:var(--charcoal)}
+.qx-hint{margin:0;font-size:13px;color:var(--smoke)}.qx-hint.hot{color:var(--champ);font-weight:700}
+.qx-inv{display:flex;align-items:center;gap:14px;cursor:pointer;border:2px solid var(--charcoal);border-radius:16px;padding:14px 18px;background:var(--ivory);font-weight:700;font-size:17px;transition:background .2s,color .2s;position:relative}
+.qx-inv input,.qx-add input{position:absolute;opacity:0;width:1px;height:1px}
+.qx-box{width:28px;height:28px;border-radius:8px;border:2px solid var(--charcoal);display:grid;place-items:center;flex:none;transition:background .2s}
+.qx-box::after{content:"";width:12px;height:7px;border:3px solid transparent;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-2px)}
+.qx-inv small{margin-left:auto;font-weight:400;font-size:14px;color:var(--smoke)}
+.qx-inv:has(input:checked){background:var(--charcoal);color:var(--ivory)}.qx-inv:has(input:checked) .qx-box{background:var(--champ);border-color:var(--champ)}.qx-inv:has(input:checked) .qx-box::after{border-color:#fff}.qx-inv:has(input:checked) small{color:#CFCBC6}
+.qx-add{display:flex;flex-wrap:wrap;gap:8px}
+.qx-add label{position:relative;cursor:pointer}
+.qx-add span{display:inline-block;font-size:14px;border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:rgba(255,255,255,.5)}
+.qx-add input:checked+span{background:var(--champ);border-color:var(--champ);color:#fff}
+.qx-right{display:grid;gap:16px;position:sticky;top:90px}
+@media(max-width:860px){.qx-right{position:static}}
+.qx-table{position:relative;min-height:150px;border-radius:20px;background:radial-gradient(120% 90% at 20% 10%,#ECEBEA,#CFCECC);display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:16px;overflow:clip;box-shadow:inset 0 1px 0 #fff}
+.qx-ghost{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-size:14px;color:var(--smoke);line-height:1.7;transition:opacity .3s}
+.qx-ghost.off{opacity:0}
+.qx-prop{width:86px;height:86px;border-radius:16px;background:var(--ivory);display:grid;place-items:center;align-content:center;gap:4px;font-size:12px;color:var(--charcoal);box-shadow:0 12px 20px -12px rgba(0,0,0,.45);position:absolute;opacity:0;pointer-events:none;transform:translateY(-140px) rotate(-12deg) scale(.6);transition:transform .55s cubic-bezier(.3,1.5,.5,1),opacity .3s}
+.qx-prop.in{position:relative;opacity:1;transform:rotate(var(--r,0deg))}
+.qx-prop svg{width:36px;height:36px;fill:none;stroke:var(--charcoal);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.qx-reels{display:flex;flex-direction:column-reverse;gap:2px;align-self:flex-end}
+.qx-reel{width:44px;height:9px;border-radius:3px;background:var(--champ);animation:qdrop .35s cubic-bezier(.3,1.6,.5,1)}
+@keyframes qdrop{from{transform:translateY(-50px);opacity:0}}
+.qx-rc{background:#FCFBF9;border-radius:6px;padding:26px 26px 32px;display:grid;gap:10px;position:relative;box-shadow:0 22px 40px -22px rgba(0,0,0,.5);-webkit-mask:radial-gradient(circle 7px at 50% 100%,transparent 98%,#000) 0 0/18px 100% repeat-x;mask:radial-gradient(circle 7px at 50% 100%,transparent 98%,#000) 0 0/18px 100% repeat-x}
+.qx-rt{text-align:center;font-family:var(--qxt);font-weight:700;letter-spacing:.3em;font-size:26px;color:var(--charcoal)}
+.qx-rs{text-align:center;font-family:var(--f-tag);font-size:11px;letter-spacing:.18em;color:var(--smoke)}
+.qx-dash{border-top:1.5px dashed var(--mist)}
+#qlines{display:grid;gap:6px;min-height:96px;align-content:start}
+.qx-row{display:flex;justify-content:space-between;gap:10px;font-variant-numeric:tabular-nums;font-size:15px;animation:qprint .3s ease-out}.qx-dim{color:var(--smoke)}
+.qx-main{font-weight:700;font-size:16px}
+.qx-empty{color:var(--mist);font-size:14px;text-align:center;padding-top:28px}
+@keyframes qprint{from{opacity:0;transform:translateY(-6px)}}
+.qx-total{display:flex;justify-content:space-between;align-items:baseline}
+.qx-total>span{font-family:var(--qxt);font-weight:700;font-size:20px}
+.qx-total b{font-family:var(--f-num);font-size:46px;font-weight:500;color:var(--charcoal);display:inline-flex;align-items:baseline;gap:6px}
+.qx-total small{font-family:var(--f-tag);font-size:14px;color:var(--smoke);letter-spacing:.1em}
+#qtot{display:inline-block}
+.qx-flash{animation:qfl .45s}@keyframes qfl{50%{color:var(--champ);transform:scale(1.1)}}
+.qx-stamp{position:absolute;right:16px;top:14px;transform:rotate(-12deg);border:3px solid var(--champ);color:var(--champ);border-radius:50%;width:84px;height:84px;display:grid;place-items:center;font-family:var(--qxt);font-weight:700;font-size:18px;animation:qstamp .4s cubic-bezier(.3,1.6,.5,1);background:rgba(252,251,249,.6)}
+@keyframes qstamp{from{transform:rotate(-12deg) scale(2.4);opacity:0}}
+.qx-go{font:inherit;font-family:var(--qxt);font-weight:700;font-size:17px;border:0;border-radius:999px;padding:15px;background:var(--charcoal);color:var(--ivory);cursor:pointer;margin-top:6px;transition:transform .15s}
+.qx-go:not(:disabled):hover{transform:translateY(-2px)}.qx-go:disabled{opacity:.3;cursor:default}
+.qx-note{font-size:13px;color:var(--charcoal);margin:0;text-align:center}.qx-note a{font-weight:700;color:var(--champ);margin-left:6px}
+.qx-fine{font-size:12px;color:var(--mist);margin:0;text-align:center}
+/* v3 layout: full-width desk stage on top, steps 2x2 + receipt below */
+.qx{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);grid-template-areas:"table table" "steps rc";gap:22px}
+.qx-table{grid-area:table;min-height:340px;gap:22px;padding:56px 28px 28px;border-radius:28px;background:radial-gradient(90% 120% at 15% 0%,#F4F3F1 0%,#DCDBD9 55%,#C9C8C6 100%);box-shadow:inset 0 1px 0 #fff,0 30px 50px -36px rgba(40,40,42,.55)}
+.qx-table::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(72,73,75,.035) 0 1px,transparent 1px 28px),repeating-linear-gradient(90deg,rgba(72,73,75,.035) 0 1px,transparent 1px 28px);pointer-events:none;border-radius:inherit}
+.qx-tlabel{position:absolute;left:28px;top:20px;font-family:var(--qxt);font-weight:700;font-size:16px;color:var(--charcoal);display:flex;gap:10px;align-items:baseline}
+.qx-tlabel span{font-family:var(--f-tag);font-size:11px;letter-spacing:.2em;color:var(--champ);font-weight:500}
+.qx-ghost{font-size:16px}
+.qx-prop{width:150px;height:150px;border-radius:24px;gap:10px;font-size:15px;font-weight:700;box-shadow:0 24px 30px -18px rgba(0,0,0,.5),inset 0 1px 0 #fff;z-index:1}
+.qx-prop svg{width:62px;height:62px;stroke-width:1.8}
+.qx-reels{gap:4px;margin-left:8px}
+.qx-reel{width:84px;height:16px;border-radius:5px;background:linear-gradient(90deg,#8E7764,var(--champ) 40%,#B9A390);box-shadow:0 2px 0 rgba(0,0,0,.12)}
+.qx-left{grid-area:steps;grid-template-columns:1fr 1fr;align-items:stretch}
+.qx-left .qx-step{grid-template-columns:1fr;gap:6px;align-content:start}.qx-left .qx-body{align-content:start}.qx-body h3{font-size:20px}
+.qx-left .qx-step:nth-child(3),.qx-left .qx-step:nth-child(4){grid-column:span 1}
+.qx-right{grid-area:rc;position:sticky;top:90px}
+.qx-opts{grid-template-columns:1fr}
+@media(max-width:1000px){.qx{grid-template-columns:1fr;grid-template-areas:"table" "steps" "rc"}.qx-right{position:static}}
+@media(max-width:640px){.qx-left{grid-template-columns:1fr}.qx-table{min-height:240px;padding:52px 14px 18px;gap:12px}.qx-prop{width:96px;height:96px;border-radius:18px;font-size:12px}.qx-prop svg{width:40px;height:40px}.qx-reel{width:54px;height:11px}}
+/* v4: right column (desk + receipt) sticky while answering */
+#quote{overflow:clip!important}
+.qx-right .qx-table,.qx-right .qx-rc{grid-area:auto!important}
+.qx{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)!important;grid-template-areas:"steps right"!important;gap:28px}
+.qx-left{grid-area:steps;grid-template-columns:1fr!important}
+.qx-left .qx-step{grid-template-columns:56px 1fr!important}
+.qx-opts{grid-template-columns:1fr 1fr!important}
+.qx-right{grid-area:right;position:sticky!important;top:96px;display:grid;gap:14px;align-self:start}
+.qx-right{top:84px}
+.qx-right .qx-table{min-height:230px;padding:46px 18px 16px;gap:12px}
+.qx-right .qx-prop{width:100px;height:100px;font-size:13px}.qx-right .qx-prop svg{width:42px;height:42px}
+.qx-right .qx-rc{padding:14px 22px 18px;gap:5px}
+.qx-right .qx-rt{font-size:20px}.qx-right #qlines{min-height:48px}.qx-right .qx-row{padding:0;line-height:1.45}.qx-right #qlines{gap:5px}.qx-right .qx-row span:first-child{min-width:0}.qx-right .qx-total b{font-size:34px}.qx-right .qx-go{padding:11px}.qx-right .qx-fine{margin:2px 0 0}
+@media(max-width:1000px){.qx{grid-template-columns:1fr!important;grid-template-areas:"right" "steps"!important}
+ .qx-right{position:sticky!important;top:64px;z-index:20;gap:0}
+ .qx-right .qx-table{min-height:150px;padding:40px 12px 12px;border-radius:20px;gap:10px}
+ .qx-right .qx-prop{width:78px;height:78px;border-radius:14px;font-size:11px}.qx-right .qx-prop svg{width:32px;height:32px}
+ .qx-right .qx-reel{width:44px;height:9px}
+ .qx-right .qx-rc{position:fixed;left:0;right:0;bottom:0;border-radius:18px 18px 0 0;-webkit-mask:none;mask:none;padding:12px max(16px,env(safe-area-inset-left,0px)) calc(12px + env(safe-area-inset-bottom,0px));grid-template-columns:1fr auto;align-items:center;gap:4px 14px;box-shadow:0 -10px 30px -12px rgba(0,0,0,.35);z-index:30}
+ .qx-right .qx-rt,.qx-right .qx-rs,.qx-right .qx-dash,.qx-right #qlines,.qx-right .qx-fine,.qx-right .qx-stamp{display:none}
+ .qx-right .qx-total{grid-column:1}.qx-right .qx-total b{font-size:30px}
+ .qx-right .qx-go{grid-column:2;grid-row:1;margin:0;padding:12px 18px;font-size:15px}
+ .qx-right .qx-note{grid-column:1/-1}
+ .qx-left .qx-step{grid-template-columns:1fr!important}
+ #quote{padding-bottom:120px}}
+@media(max-width:480px){.qx-opts{grid-template-columns:1fr!important}}
+@media (prefers-reduced-motion:reduce){.qx *{animation:none!important;transition:none!important}}
+.qx-more{margin:10px 0 0;padding:10px 14px;border-radius:12px;background:rgba(158,130,108,.12);font-size:14px;line-height:1.6;color:var(--ink,#3F4042)}
+.qx-more b{display:inline-block;margin-right:8px;padding:1px 9px;border-radius:999px;background:#9E826C;color:#fff;font-size:12px;font-weight:600;vertical-align:1px}
+.qx-more a{white-space:nowrap}.qx-more a,.qx-fine a{color:#8A6E58;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+</style>
 </head>
 <body>
 <header>
@@ -79,53 +196,31 @@
       <div class="head">
         <div class="tag">Estimate</div>
         <h2>先試算，再來聊。</h2>
-        <p class="muted">選方案和支數就能看到預算。按「複製詢價內容」，貼到 LINE 傳給我們，2 天內回覆正式報價。</p>
+        <p class="muted">回答兩個問題、選要做幾支，報價單馬上印出來。按一下就能傳到 LINE，2 天內回覆正式報價。</p>
       </div>
-      <div class="calc">
-        <form class="calc-form" id="calc" onsubmit="return false">
-          <fieldset>
-            <legend>1　選方案</legend>
-            <div class="radios">
-              <label><input type="radio" name="plan" value="1800" data-name="素材後製剪輯"><span>素材後製剪輯<small>NT$1,800／支</small></span></label>
-              <label><input type="radio" name="plan" value="3500" data-name="素材剪輯＋企劃"><span>素材剪輯＋企劃<small>NT$3,500／支</small></span></label>
-              <label><input type="radio" name="plan" value="3000" data-name="拍攝＋剪輯"><span>拍攝＋剪輯<small>NT$3,000／支</small></span></label>
-              <label><input type="radio" name="plan" value="4500" data-name="企劃＋拍攝＋剪輯" checked><span>企劃＋拍攝＋剪輯<small>NT$4,500／支</small></span></label>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>2　要做幾支</legend>
-            <div class="qty">
-              <button type="button" id="minus" aria-label="減少一支">−</button>
-              <input id="qty" type="number" min="1" max="30" value="10" inputmode="numeric" aria-label="影片支數">
-              <button type="button" id="plus" aria-label="增加一支">＋</button>
-              <span class="note">長期代操一期 10 支</span>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>3　需要加值嗎（另外報價）</legend>
-            <div class="checks">
-              <label><input type="checkbox" value="動態字卡與特效"> 動態字卡與特效</label>
-              <label><input type="checkbox" value="急件交付"> 急件交付</label>
-              <label><input type="checkbox" value="英文字幕"> 英文字幕</label>
-              <label><input type="checkbox" value="收音燈光器材"> 收音燈光器材</label>
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend>4　補充一下（選填）</legend>
-            <input id="brand" type="text" placeholder="品牌名稱或怎麼稱呼你" aria-label="品牌名稱">
-            <textarea id="memo" rows="3" placeholder="想發在哪個平台、預計什麼時候上線、有沒有參考影片" aria-label="補充說明"></textarea>
-          </fieldset>
-        </form>
-        <aside class="calc-sum" aria-live="polite">
-          <div class="tag" style="color:#C2AE9D">Your Estimate</div>
-          <p class="sum-plan" id="sumPlan">企劃＋拍攝＋剪輯 × 10 支</p>
-          <div class="sum-total"><span>NT$</span><b id="total">45,000</b></div>
-          <p class="sum-note">未稅。加值項目另外報價，正式金額以報價單為準。</p>
-          <button class="btn btn-light" type="button" id="copy">複製詢價內容</button>
-          <a class="btn btn-ghost" href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">開啟 LINE 傳給我們</a>
-          <p class="sum-note" id="copied" hidden>已複製，貼到 LINE 就可以了。</p>
-          <textarea id="out" class="out" rows="6" readonly hidden aria-label="詢價內容"></textarea>
-        </aside>
+      <div class="qx">
+        <div class="qx-left">
+          <div class="qx-step"><div class="qx-num">01</div><div class="qx-body"><h3>素材誰拍？</h3><div class="qx-opts"><button type="button" class="qx-opt" data-q="src" data-v="own"><span class="qx-ic"><svg viewBox="0 0 48 48"><rect x="14" y="5" width="20" height="38" rx="4"/><path d="M21 10h6M22 38h4"/></svg></span><span class="qx-ot"><b>我有素材</b><small>你拍好，我來剪</small></span></button><button type="button" class="qx-opt" data-q="src" data-v="shoot"><span class="qx-ic"><svg viewBox="0 0 48 48"><rect x="5" y="14" width="38" height="26" rx="4"/><circle cx="24" cy="27" r="8"/><path d="M16 14l3-5h10l3 5"/></svg></span><span class="qx-ot"><b>請薇薇拍</b><small>到現場幫你拍</small></span></button></div></div></div>
+          <div class="qx-step"><div class="qx-num">02</div><div class="qx-body"><h3>要幫你想題、寫腳本嗎？</h3><div class="qx-opts"><button type="button" class="qx-opt" data-q="plan" data-v="yes"><span class="qx-ic"><svg viewBox="0 0 48 48"><path d="M8 9h14a4 4 0 0 1 4 4v27a3 3 0 0 0-3-3H8zM40 9H28a4 4 0 0 0-2 1"/><path d="M33 12l5 5-12 14-6 1 1-6z"/></svg></span><span class="qx-ot"><b>要</b><small>選題＋腳本一起來</small></span></button><button type="button" class="qx-opt" data-q="plan" data-v="no"><span class="qx-ic"><svg viewBox="0 0 48 48"><rect x="9" y="10" width="30" height="21" rx="2"/><path d="M4 36h40M14 25h6M22 25h12M14 20h20"/></svg></span><span class="qx-ot"><b>不用</b><small>我已經有想法</small></span></button></div></div></div>
+          <div class="qx-step"><div class="qx-num">03</div><div class="qx-body"><h3>要做幾支？</h3><div class="qx-count"><input id="qn" type="range" min="1" max="10" value="1" aria-label="影片支數"><span class="qx-n"><b id="qnv">1</b>支</span></div><p class="qx-hint" id="qbulk">做滿 10 支＝一期長期代操</p><p class="qx-more"><b>多支有優惠</b>超過 10 支、或想談其他方案，<a href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">加官方 LINE@ 諮詢 →</a></p></div></div>
+          <div class="qx-step"><div class="qx-num">04</div><div class="qx-body"><h3>其他需求</h3>
+            <label class="qx-inv" for="qinv"><input id="qinv" type="checkbox"><span class="qx-box"></span><span>需要開發票</span><small>合計 +5%</small></label>
+            <div class="qx-add"><label><input type="checkbox" value="動態字卡與特效"><span>動態字卡與特效</span></label><label><input type="checkbox" value="急件交付"><span>急件交付</span></label><label><input type="checkbox" value="英文字幕"><span>英文字幕</span></label></div>
+            <p class="qx-hint">加值項目另外報價，不算進合計</p></div></div>
+        </div>
+        <div class="qx-right">
+          <div class="qx-table"><div class="qx-tlabel"><span>YOUR DESK</span>你的短影音工作桌</div><div class="qx-ghost" id="qghost">回答下面的問題，<br>需要的東西會一樣一樣擺上桌</div><div class="qx-prop" id="qp-phone"><svg viewBox="0 0 48 48"><rect x="14" y="5" width="20" height="38" rx="4"/><path d="M21 10h6M22 38h4"/></svg><span>你的素材</span></div><div class="qx-prop" id="qp-cam"><svg viewBox="0 0 48 48"><rect x="5" y="14" width="38" height="26" rx="4"/><circle cx="24" cy="27" r="8"/><path d="M16 14l3-5h10l3 5"/></svg><span>現場拍攝</span></div><div class="qx-prop" id="qp-book"><svg viewBox="0 0 48 48"><path d="M8 9h14a4 4 0 0 1 4 4v27a3 3 0 0 0-3-3H8zM40 9H28a4 4 0 0 0-2 1"/><path d="M33 12l5 5-12 14-6 1 1-6z"/></svg><span>選題腳本</span></div><div class="qx-prop" id="qp-pc"><svg viewBox="0 0 48 48"><rect x="9" y="10" width="30" height="21" rx="2"/><path d="M4 36h40M14 25h6M22 25h12M14 20h20"/></svg><span>剪輯＋封面</span></div><div class="qx-reels" id="qreels"></div></div>
+          <div class="qx-rc">
+            <div class="qx-rt">報價試算</div><div class="qx-rs">STYLE LAB · ESTIMATE · NO.<span>0001</span></div><div class="qx-dash"></div>
+            <div id="qlines"></div>
+            <div class="qx-dash"></div>
+            <div class="qx-total"><span>合計</span><b><small>NT$</small><span id="qtot">0</span></b></div>
+            <span class="qx-stamp" id="qstamp" hidden>已估價</span>
+            <button type="button" class="qx-go" id="qgo" disabled>複製報價，傳 LINE 給薇薇</button>
+            <p class="qx-note" id="qsent" hidden>已複製報價內容，到 LINE 貼上送出就可以了。<a href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">開啟 LINE →</a></p>
+            <p class="qx-fine">未稅。多支另有優惠，正式金額以報價單為準，2 天內回覆。<br>其他數量或方案？<a href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">加 LINE@ 諮詢</a></p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -183,21 +278,25 @@
     <div class="legal"><span>© 2026 風格研究所 Style Lab</span><span>服務條款・隱私權政策・退款說明</span></div>
   </div>
 </footer><script>
-(function(){var f=document.getElementById('calc');if(!f)return;
-var q=document.getElementById('qty'),t=document.getElementById('total'),sp=document.getElementById('sumPlan'),out=document.getElementById('out'),ok=document.getElementById('copied');
-function plan(){return f.querySelector('input[name=plan]:checked')}
-function n(){var v=parseInt(q.value,10);if(isNaN(v)||v<1)v=1;if(v>30)v=30;return v}
-function text(){var p=plan(),a=[].map.call(f.querySelectorAll('.checks input:checked'),function(x){return x.value});
-var b=document.getElementById('brand').value.trim(),m=document.getElementById('memo').value.trim();
-return '您好，我想詢問短影音合作\n方案：'+p.dataset.name+' × '+n()+' 支\n試算：NT$'+(p.value*n()).toLocaleString('en-US')+'（未稅）'+(a.length?'\n加值：'+a.join('、'):'')+(b?'\n品牌／稱呼：'+b:'')+(m?'\n補充：'+m:'')}
-function up(){var p=plan();t.textContent=(p.value*n()).toLocaleString('en-US');sp.textContent=p.dataset.name+' × '+n()+' 支';ok.hidden=true}
-f.addEventListener('input',up);f.addEventListener('change',up);
-document.getElementById('minus').onclick=function(){q.value=Math.max(1,n()-1);up()};
-document.getElementById('plus').onclick=function(){q.value=Math.min(30,n()+1);up()};
-document.getElementById('copy').onclick=function(){var s=text();out.value=s;
-function shown(){out.hidden=false;out.select()}
-try{navigator.clipboard.writeText(s).then(function(){ok.hidden=false;out.hidden=false},shown)}catch(e){shown()}};
-up()})();
+(()=>{const P={own:{no:['客戶素材後製剪輯',1800],yes:['客戶素材剪輯＋企劃',3500]},shoot:{no:['拍攝＋剪輯',3000],yes:['腳本企劃＋拍攝＋剪輯',4500]}};
+const st={src:null,plan:null,n:1,inv:false};let shown=0,txt='';const $=id=>document.getElementById(id),f=x=>x.toLocaleString('en-US');
+const R={phone:'-6deg',cam:'5deg',book:'-3deg',pc:'4deg'};Object.keys(R).forEach(k=>$('qp-'+k).style.setProperty('--r',R[k]));
+function render(){const any=!!(st.src||st.plan),on=(id,v)=>$(id).classList.toggle('in',v);on('qp-phone',st.src==='own');on('qp-cam',st.src==='shoot');on('qp-book',st.plan==='yes');on('qp-pc',any);
+ $('qghost').classList.toggle('off',any);
+ const r=$('qreels'),want=any?st.n:0;while(r.children.length<want){const d=document.createElement('div');d.className='qx-reel';r.appendChild(d)}while(r.children.length>want)r.lastChild.remove();
+ $('qnv').textContent=st.n;$('qn').style.setProperty('--p',((st.n-1)/9*100)+'%');const bk=$('qbulk');bk.classList.toggle('hot',st.n>=10);bk.textContent=st.n>=10?'✓ 一期長期代操（10 支）':'做滿 10 支＝一期長期代操';
+ $('qstamp').hidden=true;$('qsent').hidden=true;
+ if(!st.src||!st.plan){$('qlines').innerHTML='<div class="qx-empty">'+(!any?'回答左邊 01、02，報價會印在這裡':'再回答一題就出價')+'</div>';$('qgo').disabled=true;count(0);return}
+ const [n,p]=P[st.src][st.plan],sub=p*st.n,tax=st.inv?Math.round(sub*.05):0,adds=[...document.querySelectorAll('.qx-add input:checked')].map(x=>x.value);
+ const rows=[[n,'NT$'+f(p)+'／支',2],['　× '+st.n+' 支',f(sub),1],['封面','含',1]];if(st.src==='shoot')rows.push(['交通費','實報實銷',1]);if(st.inv)rows.push(['發票 5%',f(tax),1]);if(adds.length)rows.push(['＋'+adds.join('、'),'另外報價',1]);
+ $('qlines').innerHTML=rows.map(x=>'<div class="qx-row'+(x[2]===1?' qx-dim':' qx-main')+'"><span>'+x[0]+'</span><span>'+x[1]+'</span></div>').join('');
+ $('qgo').disabled=false;count(sub+tax);txt='您好，我想詢價短影音：\n方案：'+n+' × '+st.n+' 支\n試算：NT$'+f(sub+tax)+(st.inv?'（含 5% 發票）':'（未稅）')+(adds.length?'\n加值：'+adds.join('、'):'')+'\n（來自官網報價試算）'}
+function count(to){const el=$('qtot'),from=shown,t0=performance.now();shown=to;if(from===to){el.textContent=f(to);return}el.classList.remove('qx-flash');void el.offsetWidth;el.classList.add('qx-flash');(function s(t){const k=Math.min(1,(t-t0)/450);el.textContent=f(Math.round(from+(to-from)*k));if(k<1)requestAnimationFrame(s)})(t0)}
+document.querySelectorAll('.qx-opt').forEach(b=>b.addEventListener('click',()=>{st[b.dataset.q]=b.dataset.v;document.querySelectorAll('.qx-opt[data-q='+b.dataset.q+']').forEach(o=>o.classList.toggle('on',o===b));render()}));
+$('qn').addEventListener('input',e=>{st.n=+e.target.value;render()});$('qinv').addEventListener('change',e=>{st.inv=e.target.checked;render()});
+document.querySelectorAll('.qx-add input').forEach(i=>i.addEventListener('change',render));
+$('qgo').addEventListener('click',()=>{$('qstamp').hidden=false;$('qsent').hidden=false;try{navigator.clipboard.writeText(txt).catch(()=>{})}catch(e){}});
+render()})();
 </script>
 </body>
 </html>
