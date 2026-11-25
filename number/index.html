@@ -312,7 +312,7 @@ function render(input,isDemo){
   stars.forEach(function(s,i){html+=(i?'<span class="arrow">→</span>':'')+'<span class="chip '+(s.n==="伏位"?"n":s.jx?"g":"b")+'">'+s.n+'</span>';});
   html+='</div>';
   var g=stars.filter(function(s){return STARS[s.n].jx;}).length,z=(d.match(/0/g)||[]).length,f=(d.match(/5/g)||[]).length;
-  html+='<div class="stats"><div class="stat"><b>'+g+'</b><span>吉星</span></div><div class="stat"><b>'+(stars.length-g)+'</b><span>凶星</span></div><div class="stat"><b>'+z+'・'+f+'</b><span>0 隱藏・5 加強</span></div></div>';
+  html+='<div class="stats"><div class="stat"><b>'+g+'</b><span>吉星</span></div><div class="stat"><b>'+(stars.length-g)+'</b><span>凶星</span></div><div class="stat"><b>'+z+'・'+f+'</b><span>0・5 個數</span></div></div>';
   html+='<div class="share"><button class="btn ghost" id="again">換一組</button><button class="btn champ" id="share">分享給朋友玩</button></div></section>';
 
   // detail
