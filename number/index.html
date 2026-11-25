@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>數字易經・八星判斷｜風格研究所</title>
+<meta name="description" content="輸入手機號碼，30 秒看懂你的八星磁場：天醫、生氣、延年、伏位、絕命、五鬼、六煞、禍害。只在你的手機上計算，不上傳、不儲存。民俗文化、娛樂參考。">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#E4E4E3">
+<meta property="og:title" content="你的手機號碼，在說什麼故事？｜數字易經八星判斷">
+<meta property="og:description" content="輸入手機後 8 碼，看懂你的吉星、凶星和結尾定調。風格研究所 STYLE LAB。">
+<meta property="og:image" content="https://stylelab-tw.github.io/number/og.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="../assets/logo.png">
+<style>
+@font-face{font-family:"JX";src:local("jf-jinxuanlatte-2.1 Bold"),local("jf-jinxuanlatte-2.1"),url(n-title.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"GS";src:url(n-body.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Jost";src:url(../assets/jost.woff2) format("woff2");font-weight:400}
+@font-face{font-family:"Corm";src:url(../assets/corm.woff2) format("woff2");font-weight:500;font-style:italic}
+:root{
+  --charcoal:#48494B;--smoke:#6B6D70;--mist:#A5A5A3;--warm:#D5D2CE;--ivory:#F3F1EE;--champ:#A38C79;--champ-d:#8A735F;
+  --paper1:#E6E6E5;--paper2:#D9D9D8;--glass:rgba(250,250,249,.72);--line:rgba(72,73,75,.14);
+  --good:#5E7A6B;--bad:#9A6A5E;
+  --f-title:"JX","PingFang TC","Noto Sans TC",sans-serif;
+  --f-body:"GS","PingFang TC","Noto Sans TC",sans-serif;
+  --f-tag:"Jost","Helvetica Neue",Arial,sans-serif;
+  --f-num:"Corm",Georgia,serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--charcoal);font-family:var(--f-body);font-size:16px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  background:#DCDCDB radial-gradient(120% 70% at 85% -10%,rgba(255,255,255,.75),rgba(255,255,255,0) 60%) fixed,
+  linear-gradient(180deg,var(--paper1),var(--paper2)) fixed;min-height:100vh}
+a{color:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 40px}
+header{display:flex;align-items:center;gap:10px;padding:18px 0 6px}
+header img{width:62px;height:auto}
+header .bn{font-family:var(--f-title);font-size:17px;line-height:1.2}
+header .bn small{display:block;font-family:var(--f-tag);font-size:10.5px;letter-spacing:.28em;color:var(--smoke)}
+.tag{font-family:var(--f-tag);font-size:11.5px;letter-spacing:.26em;color:var(--champ-d);text-transform:uppercase}
+h1{font-family:var(--f-title);font-weight:700;font-size:clamp(28px,8vw,40px);line-height:1.3;margin:14px 0 8px;letter-spacing:.02em}
+h2{font-family:var(--f-title);font-weight:700;font-size:21px;line-height:1.4;margin:0 0 10px}
+h3{font-family:var(--f-title);font-weight:700;font-size:17px;margin:0 0 4px}
+.lead{color:var(--smoke);margin:0 0 18px}
+.card{background:var(--glass);border:1px solid rgba(255,255,255,.7);border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(72,73,75,.08);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);margin:0 0 16px}
+label.lb{display:block;font-size:14px;color:var(--smoke);margin-bottom:8px}
+.inrow{display:flex;gap:10px}
+input[type=text],input[type=tel]{flex:1;min-width:0;font:inherit;font-family:var(--f-tag);font-size:22px;letter-spacing:.12em;padding:12px 14px;border-radius:14px;border:1.5px solid var(--warm);background:#fff;color:var(--charcoal);outline:none}
+input:focus{border-color:var(--champ)}
+input::placeholder{color:#c4c4c2}
+button{font:inherit;cursor:pointer}
+.btn{border:0;border-radius:14px;padding:12px 18px;background:var(--charcoal);color:#fff;font-family:var(--f-title);font-size:16px;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--charcoal);border:1.5px solid var(--charcoal)}
+.btn.champ{background:var(--champ)}
+.note{font-size:13px;color:var(--smoke);margin:10px 0 0;display:flex;gap:6px;align-items:flex-start}
+.err{color:var(--bad);font-size:14px;margin:8px 0 0;min-height:0}
+.badge{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;background:var(--ivory);border:1px solid var(--warm);color:var(--smoke);vertical-align:middle}
+/* digits */
+.digits{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 14px}
+.dg{width:34px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--f-tag);font-size:21px;background:#fff;border:1px solid var(--warm)}
+.dg.z{color:#b9b9b7;background:#efefee}
+.dg.f{color:#fff;background:var(--champ);border-color:var(--champ)}
+.dg.off{opacity:.35}
+.legend{font-size:12.5px;color:var(--smoke);display:flex;gap:14px;flex-wrap:wrap;margin-top:-6px;margin-bottom:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+/* summary */
+.type{font-family:var(--f-title);font-size:28px;line-height:1.3;margin:2px 0 6px}
+.one{font-size:17px;line-height:1.75;margin:0}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:14px 0 0}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:99px;font-size:14px;font-family:var(--f-title);color:#fff}
+.chip.g{background:var(--good)}.chip.b{background:var(--bad)}.chip.n{background:var(--mist)}
+.arrow{color:var(--mist);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.stat{background:#fff;border-radius:14px;padding:10px;text-align:center;border:1px solid var(--line)}
+.stat b{display:block;font-family:var(--f-num);font-style:italic;font-size:28px;line-height:1.1;color:var(--charcoal)}
+.stat span{font-size:12.5px;color:var(--smoke)}
+/* rows */
+.row{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0;padding-top:4px}
+.pair{flex:none;width:58px;text-align:center}
+.pair b{display:block;font-family:var(--f-tag);font-size:22px;letter-spacing:.06em;line-height:1.2}
+.pair small{font-size:11.5px;color:var(--smoke)}
+.rbody{flex:1;min-width:0}
+.rhead{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:2px}
+.mini{font-size:11.5px;padding:1px 8px;border-radius:99px;border:1px solid var(--warm);color:var(--smoke);background:#fff}
+.mini.h{background:#efefee}.mini.s{border-color:var(--champ);color:var(--champ-d)}
+.bar{height:5px;border-radius:9px;background:#e9e9e8;margin:6px 0 6px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px}
+.rbody p{margin:0;font-size:15px}
+.because{background:var(--ivory);border-left:3px solid var(--champ);border-radius:10px;padding:12px 14px;margin:10px 0 0;font-size:15.5px}
+.tips{margin:0;padding-left:1.2em}
+.tips li{margin:4px 0}
+details{border-top:1px solid var(--line);padding-top:10px;margin-top:6px}
+summary{cursor:pointer;font-family:var(--f-title);font-size:17px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";color:var(--champ)}
+details[open] summary::after{content:"－"}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-weight:400;color:var(--smoke);font-size:12.5px}
+td.st{font-family:var(--f-title);white-space:nowrap}
+td.nm{font-family:var(--f-tag);letter-spacing:.04em;white-space:nowrap}
+.cta{background:var(--charcoal);color:#fff;border-color:var(--charcoal)}
+.cta h2{color:#fff}
+.cta p{color:#dcdcdb;margin:0 0 14px}
+.cta .btns{display:flex;flex-direction:column;gap:10px}
+.cta a.btn{display:block;text-align:center;text-decoration:none;background:#fff;color:var(--charcoal)}
+.cta a.btn.champ{background:var(--champ);color:#fff}
+.share{display:flex;gap:10px;margin-top:12px}
+.share .btn{flex:1}
+footer{font-size:12.5px;color:var(--smoke);text-align:center;padding:10px 0 30px;line-height:1.7}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--charcoal);color:#fff;padding:8px 16px;border-radius:99px;font-size:14px;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.on{opacity:.95}
+@media (max-width:380px){.dg{width:30px;height:38px;font-size:19px}.btn{padding:12px 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="../assets/logo.png" alt="風格研究所 Logo">
+    <div class="bn">風格研究所<small>STYLE LAB</small></div>
+  </header>
+
+  <section>
+    <div class="tag" style="margin-top:14px">Number I Ching ・ 八星磁場</div>
+    <h1>你的手機號碼，<br>在說什麼故事？</h1>
+    <p class="lead">輸入手機號碼，30 秒看懂你的吉星、凶星，還有最重要的「結尾定調」。</p>
+  </section>
+
+  <section class="card" id="form">
+    <label class="lb" for="num">輸入手機號碼（只輸入後 8 碼也可以）</label>
+    <div class="inrow">
+      <input id="num" type="tel" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="0912345678">
+      <button class="btn" id="go">開始解讀</button>
+    </div>
+    <div class="err" id="err" role="alert"></div>
+    <p class="note"><span>🔒</span><span>只在你的手機上計算，不會上傳、也不會儲存號碼。</span></p>
+  </section>
+
+  <div id="result" aria-live="polite"></div>
+
+  <section class="card">
+    <h2>怎麼讀？三句口訣</h2>
+    <ol class="tips">
+      <li><b>兩兩一組</b>：取後 8 碼，相鄰兩碼一組、重疊往後讀，每組對一顆星。</li>
+      <li><b>因為所以</b>：前面的星是原因，後面的星是結果。</li>
+      <li><b>結尾定調</b>：越後面影響越大，最後一顆星決定整體結果。</li>
+    </ol>
+    <p style="margin:10px 0 0;font-size:14.5px;color:var(--smoke)"><b style="color:var(--charcoal)">0＝隱藏</b>：把前後磁場藏起來，好運偏低調。<b style="color:var(--champ-d)">5＝加強</b>：把前後磁場放大，好壞都放大。同一顆星的四組數字，能量由強到弱是 100%、75%、50%、25%。</p>
+    <details>
+      <summary>八星速查表</summary>
+      <table style="margin-top:8px">
+        <thead><tr><th>星</th><th>數字（由強到弱）</th><th>關鍵字</th></tr></thead>
+        <tbody id="tbl"></tbody>
+      </table>
+      <p style="font-size:12.5px;color:var(--smoke);margin:8px 0 0">數字前後顛倒意思相同（13＝31）。東組 1349、西組 2678：同組是吉星，跨組是凶星，兩個一樣是伏位。</p>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2 style="margin-bottom:4px">選配：身分證人生線</h2>
+    <p style="margin:0 0 12px;font-size:14.5px;color:var(--smoke)">想看每個年齡階段的主題？輸入身分證字號（簡易版讀法）。一樣只在你的手機上計算、不上傳不儲存，看完就關掉也沒關係。</p>
+    <div class="inrow">
+      <input id="pid" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="10" placeholder="A123456789" style="font-size:19px">
+      <button class="btn ghost" id="go2">看人生線</button>
+    </div>
+    <div class="err" id="err2" role="alert"></div>
+    <div id="life"></div>
+  </section>
+
+  <section class="card cta">
+    <div class="tag" style="color:#cbb8a8">Style Lab</div>
+    <h2>想把數字、命理變成好看的內容？</h2>
+    <p>風格研究所做短影音企劃、拍攝、剪輯，也教你用 AI 做出像這樣的互動網頁。追蹤 IG 看更多數字易經小知識，或加官方 LINE 聊聊。</p>
+    <div class="btns">
+      <a class="btn" href="https://www.instagram.com/_stylelab.2025/" target="_blank" rel="noopener">追蹤 IG @_stylelab.2025</a>
+      <a class="btn" href="https://www.instagram.com/zw______/" target="_blank" rel="noopener">薇薇的個人 IG @zw______</a>
+      <a class="btn champ" href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">加入官方 LINE</a>
+    </div>
+  </section>
+
+  <footer>
+    數字易經（數字能量學）是台灣流行的民俗文化，<br>本頁僅供<b>民俗文化、娛樂參考</b>，沒有科學根據，不構成任何建議，<br>也不保證改運。各派老師讀法略有不同，本頁採常見版本。<br>
+    © 風格研究所 STYLE LAB
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+var STARS={
+  "天醫":{jx:1,pairs:["13","68","49","27"],kw:"財富、貴人、感情",
+    trait:"善良大方、財運好，常遇到願意幫忙的人。",care:"太相信人容易被騙、心軟借錢要小心。",
+    cause:"有財運、有貴人",result:"得到財富和貴人",end:"結果落在財與貴人，錢和幫手會來。"},
+  "生氣":{jx:1,pairs:["14","67","39","28"],kw:"樂觀、人緣、轉機",
+    trait:"隨和、笑容多、人緣好，遇到困難常有轉機。",care:"容易知足、懶散，記得保持積極。",
+    cause:"人緣好、心態樂觀",result:"遇到轉機和好人緣",end:"最後靠好人緣收尾，遇到困難總有轉機。"},
+  "延年":{jx:1,pairs:["19","78","34","26"],kw:"專業、領導、責任",
+    trait:"意志堅定、能扛事、專業度高，別人願意信任。",care:"固執、壓力自己吞，記得適度放手。",
+    cause:"專業和責任感",result:"在專業上被信任、能扛大事",end:"最後靠專業與責任感穩穩收好。"},
+  "伏位":{jx:1,pairs:["11","22","33","44","66","77","88","99"],kw:"穩定、等待、延續",
+    trait:"穩定、有耐心，會把前一顆星的能量延續下去。",care:"保守、猶豫，機會來了要敢抓。",
+    cause:"穩穩累積",result:"慢慢累積、穩定延續",end:"結尾是伏位，代表前面的能量會穩穩延續下去。"},
+  "絕命":{jx:0,pairs:["12","69","48","37"],kw:"衝勁、投資、大起大落",
+    trait:"敢衝、豪爽、行動力強，有機會賺大錢。",care:"衝動、意氣用事，花錢前先冷靜三秒。",
+    cause:"敢衝敢拚",result:"大起大落、得失都大",end:"結尾是絕命，衝勁強但起伏大，重大決定要多想一步。"},
+  "五鬼":{jx:0,pairs:["18","79","36","24"],kw:"聰明、創意、變動",
+    trait:"點子多、反應快、學習力強，常有鬼點子。",care:"想法反覆、計畫常變，記得把點子寫下來做完。",
+    cause:"點子多、反應快",result:"計畫多變、需要多確認",end:"結尾是五鬼，點子源源不絕，但結果容易變動，計畫要定下來。"},
+  "六煞":{jx:0,pairs:["16","47","38","29"],kw:"人際、桃花、美感",
+    trait:"細心、有美感、異性緣好，懂得照顧人。",care:"情緒化、猶豫不決，人際上別想太多。",
+    cause:"懂人心、有美感",result:"人際和感情的課題比較多",end:"結尾是六煞，美感與服務力是武器，但要顧好情緒與人際界線。"},
+  "禍害":{jx:0,pairs:["17","89","46","23"],kw:"口才、表達、說服",
+    trait:"口才好、會講、說服力強。",care:"口舌是非、說話可能傷人而不自知。",
+    cause:"口才好、很會講",result:"容易有口舌是非",end:"結尾是禍害，口才是你的武器，說話先肯定再講問題就很加分。"}
+};
+var USE={"絕命":"用對地方：敢拍板、敢投資自己","五鬼":"用對地方：源源不絕的企劃點子","六煞":"用對地方：很懂人心的服務力與美感","禍害":"用對地方：講課、直播、帶貨的口才"};
+var COMBO={
+ "延年>天醫":"靠專業賺錢，越做越有口碑",
+ "生氣>天醫":"靠人緣帶財，貴人介紹生意",
+ "五鬼>天醫":"創意變現，點子能賺錢",
+ "禍害>天醫":"靠口才賺錢，適合講師、直播、業務",
+ "六煞>天醫":"靠人際、美感、服務賺錢",
+ "絕命>天醫":"敢衝敢投資而得財，但過程辛苦",
+ "天醫>生氣":"有錢也開心，財來心情好",
+ "天醫>絕命":"賺得多也花得多，容易衝動投資",
+ "天醫>五鬼":"財來財去，錢容易被借走或變動",
+ "天醫>禍害":"因錢起口角，合夥要寫清楚",
+ "延年>絕命":"責任太重、硬撐，工作壓力大",
+ "五鬼>絕命":"想法太冒險，判斷容易失誤"
+};
+var MAP={},PCT=[100,75,50,25];
+Object.keys(STARS).forEach(function(n){STARS[n].pairs.forEach(function(p,i){
+  MAP[p]={n:n,pct:n==="伏位"?100:PCT[i]};MAP[p[1]+p[0]]=MAP[p];});});
+function isMod(c){return c==="0"||c==="5";}
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+
+/* 手機：後 8 碼，0/5 夾在中間就併入該組 */
+function readPhone(d){
+  var core=[];for(var i=0;i<d.length;i++)if(!isMod(d[i]))core.push(i);
+  var stars=[];
+  for(var k=0;k+1<core.length;k++){
+    var a=core[k],b=core[k+1],mid=d.slice(a+1,b),key=d[a]+d[b],m=MAP[key];
+    var s={from:a,to:b,raw:d.slice(a,b+1),key:key,n:m.n,pct:m.pct,hide:mid.indexOf("0")>=0,boost:mid.indexOf("5")>=0,startHide:false,startBoost:false,endHide:false,endBoost:false};
+    stars.push(s);
+  }
+  if(stars.length){
+    var lead=d.slice(0,core[0]),tail=d.slice(core[core.length-1]+1);
+    stars[0].startHide=lead.indexOf("0")>=0;stars[0].startBoost=lead.indexOf("5")>=0;
+    var L=stars[stars.length-1];L.endHide=tail.indexOf("0")>=0;L.endBoost=tail.indexOf("5")>=0;
+  }
+  // 伏位延續前一顆星
+  stars.forEach(function(s,i){s.eff=s.n;if(s.n==="伏位"&&i>0)s.eff=stars[i-1].eff;s.jx=STARS[s.eff].jx;});
+  return stars;
+}
+function halfScore(arr){var g=0,b=0;arr.forEach(function(s){s.jx?g++:b++;});return{g:g,b:b,v:g-b};}
+function judgeType(stars){
+  var n=stars.length,bad=stars.filter(function(s){return!s.jx;}).length;
+  if(n===1)return stars[0].jx?{t:"吉星型",d:"只有一顆星，而且是吉星。"}:{t:"挑戰型",d:"只有一顆星，是要學會用的能量。"};
+  if(bad===0)return{t:"全吉星・順風型",d:"整串都是吉星，順上加順。"};
+  var h=Math.floor(n/2),A=halfScore(stars.slice(0,h)),B=halfScore(stars.slice(h));
+  if(A.v<=0&&B.v>0)return{t:"先苦後甜型",d:"前面辛苦一點，越後面越順。"};
+  if(A.v>0&&B.v<0)return{t:"先甜後苦型",d:"開頭順，後段要守住成果。"};
+  if(bad>n-bad)return{t:"波動挑戰型",d:"凶星比較多，能量很強，用對地方就是優勢。"};
+  return{t:"起伏成長型",d:"吉凶交錯，在起伏中一路成長。"};
+}
+function becauseLine(a,b){
+  var k=a.eff+">"+b.eff;
+  if(COMBO[k])return "因為"+STARS[a.eff].cause+"，所以"+COMBO[k]+"。";
+  if(b.n==="伏位")return "因為"+STARS[a.eff].cause+"，後面接伏位，這股能量會被穩穩延續。";
+  return "因為"+STARS[a.eff].cause+"，所以"+STARS[b.eff].result+"。";
+}
+function tagList(s){
+  var t=[];
+  if(s.hide||s.startHide)t.push('<span class="mini h">隱藏</span>');
+  if(s.boost||s.startBoost)t.push('<span class="mini s">加強</span>');
+  if(s.endBoost)t.push('<span class="mini s">結尾 5 放大</span>');
+  if(s.endHide)t.push('<span class="mini h">結尾 0 低調</span>');
+  return t.join("");
+}
+function render(input,isDemo){
+  var digits=input.replace(/\D/g,"");
+  if(digits.length<4){$("err").textContent="請至少輸入 4 碼數字喔（建議輸入手機後 8 碼）。";return false;}
+  $("err").textContent="";
+  var full=digits,d=digits.slice(-8),offset=full.length-d.length;
+  var stars=readPhone(d);
+  var html="";
+  // digit strip
+  var cells="";
+  for(var i=0;i<full.length;i++){
+    var c=full[i],cls="dg"+(c==="0"?" z":c==="5"?" f":"")+(i<offset?" off":"");
+    cells+='<span class="'+cls+'">'+c+'</span>';
+  }
+  html+='<section class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><h2 style="margin:0">解讀結果</h2>'+(isDemo?'<span class="badge">範例號碼</span>':'')+'</div>';
+  html+='<div class="digits">'+cells+'</div><div class="legend">'+(offset?'<span><i style="background:#ddd"></i>前面號碼不讀</span>':'')+'<span><i style="background:#c9c9c7"></i>0 隱藏</span><span><i style="background:var(--champ)"></i>5 加強</span></div>';
+  if(!stars.length){
+    html+='<p class="one">這串數字幾乎都是 0 和 5，讀不出星。0 很多代表能量低調內斂、5 很多代表好壞都被放大。換一組號碼試試看吧！</p></section>';
+    $("result").innerHTML=html;return true;
+  }
+  var ty=judgeType(stars),last=stars[stars.length-1];
+  var endTxt=STARS[last.n].end;
+  if(last.n==="伏位"&&stars.length>1)endTxt="結尾是伏位，把前面的「"+last.eff+"」穩穩延續下去："+STARS[last.eff].end;
+  if(last.endBoost)endTxt+="結尾的 5 再把這顆星放大。";
+  if(last.endHide)endTxt+="結尾的 0 讓結果比較低調，不一定馬上看得到。";
+  var one=ty.d+endTxt;
+  html+='<div class="tag">一句話總結</div><div class="type">'+ty.t+'</div><p class="one">'+esc(one)+'</p>';
+  html+='<div class="chain">';
+  stars.forEach(function(s,i){html+=(i?'<span class="arrow">→</span>':'')+'<span class="chip '+(s.n==="伏位"?"n":s.jx?"g":"b")+'">'+s.n+'</span>';});
+  html+='</div>';
+  var g=stars.filter(function(s){return STARS[s.n].jx;}).length,z=(d.match(/0/g)||[]).length,f=(d.match(/5/g)||[]).length;
+  html+='<div class="stats"><div class="stat"><b>'+g+'</b><span>吉星</span></div><div class="stat"><b>'+(stars.length-g)+'</b><span>凶星</span></div><div class="stat"><b>'+z+'・'+f+'</b><span>0 隱藏・5 加強</span></div></div>';
+  html+='<div class="share"><button class="btn ghost" id="again">換一組</button><button class="btn champ" id="share">分享給朋友玩</button></div></section>';
+
+  // detail
+  html+='<section class="card"><h2>每一顆星在說什麼</h2>';
+  stars.forEach(function(s,i){
+    var S=STARS[s.n],col=s.n==="伏位"?"var(--mist)":S.jx?"var(--good)":"var(--bad)";
+    var body=S.trait+" "+(S.jx?"注意："+S.care:"注意："+S.care+" "+USE[s.n]+"。");
+    if(s.n==="伏位"&&i>0)body="延續前一顆星「"+stars[i-1].n+"」的能量。"+(stars[i-1].jx?"接在吉星後面是加分。":"接在凶星後面要小心卡住、走不出來。");
+    if(s.hide)body+=" 中間夾了 0：這顆星被隱藏，力量在但不明顯，需要時間發酵。";
+    if(s.boost)body+=" 中間夾了 5：這顆星被放大"+(S.jx?"，好處更明顯。":"，凶性也會變強，要多留意。");
+    if(i===0&&s.startHide)body+=" 開頭有 0：起步比較低調。";
+    if(i===0&&s.startBoost)body+=" 開頭有 5：一開始就把這顆星放大。";
+    html+='<div class="row"><div class="pair"><b>'+esc(s.raw)+'</b><small>'+(i===stars.length-1?"結尾・最重要":"第 "+(i+1)+" 組")+'</small></div><div class="rbody"><div class="rhead"><h3 style="color:'+col+'">'+s.n+'</h3><span class="mini">'+(S.jx?"吉":"凶")+'・'+s.pct+'%</span>'+tagList(s)+'</div><div class="bar"><i style="width:'+s.pct+'%;background:'+col+'"></i></div><p>'+esc(body)+'</p></div></div>';
+  });
+  // because chain: last two meaningful links
+  var links=[];
+  for(var j=0;j+1<stars.length;j++)links.push(becauseLine(stars[j],stars[j+1]));
+  if(links.length){
+    html+='<div class="tag" style="margin-top:12px">因為・所以</div>';
+    var show=links.slice(-3);
+    show.forEach(function(l){html+='<div class="because">'+esc(l)+'</div>';});
+  }
+  html+='</section>';
+
+  // tips
+  var tips=[];
+  if(z>=3)tips.push("0 有 "+z+" 個：好運偏內斂，能力和人緣容易被藏住，主動曝光作品、讓別人知道你在做什麼，效果會更好。");
+  else if(z>0)tips.push("有 0 的地方能量比較低調，不是沒有，而是需要時間發酵。");
+  var nearBad=stars.some(function(s){return!STARS[s.n].jx&&(s.boost||s.endBoost||s.startBoost);});
+  if(nearBad)tips.push("5 貼在凶星旁邊，凶性也被放大：那一顆星的「注意」要特別放在心上。");
+  if(!STARS[last.n].jx)tips.push("結尾是凶星不用怕，凶星是波動大、要會用的能量，用對地方反而是優勢。");
+  else tips.push("結尾是吉星，整體結果偏順，"+(ty.t.indexOf("先苦")>=0?"前面的辛苦都是累積。":"保持現在的節奏就好。"));
+  if(digits.length<8)tips.push("你只輸入了 "+digits.length+" 碼，輸入完整後 8 碼會讀得更完整。");
+  html+='<section class="card"><h2>小提醒</h2><ul class="tips">'+tips.map(function(t){return"<li>"+esc(t)+"</li>";}).join("")+'</ul><p style="font-size:12.5px;color:var(--smoke);margin:10px 0 0">民俗文化、娛樂參考。不用為了這個換號碼，看看就好、開心最重要。</p></section>';
+  $("result").innerHTML=html;
+  $("again").onclick=function(){$("num").value="";$("num").focus();window.scrollTo({top:$("form").offsetTop-10,behavior:"smooth"});};
+  $("share").onclick=share;
+  return true;
+}
+function share(){
+  var url=location.href.split("#")[0].split("?")[0],data={title:"數字易經八星判斷",text:"輸入手機號碼，看看你的號碼在說什麼故事（民俗文化、娛樂參考）",url:url};
+  if(navigator.share){navigator.share(data).catch(function(){});return;}
+  try{navigator.clipboard.writeText(url).then(function(){toast("已複製連結，貼給朋友玩吧！");},function(){toast(url);});}catch(e){toast(url);}
+}
+function toast(t){var el=$("toast");el.textContent=t;el.classList.add("on");setTimeout(function(){el.classList.remove("on");},2200);}
+
+/* 身分證人生線（簡易版）：字母轉兩碼 A=01…Z=26，共 11 碼兩兩一組 10 組 */
+var AGES=["0–10 歲","11–15 歲","16–20 歲","21–25 歲","26–30 歲","31–35 歲","36–40 歲","41–45 歲","46–50 歲","51 歲以後"];
+function nearest(d,i,dir){for(var k=i;k>=0&&k<d.length;k+=dir)if(!isMod(d[k]))return k;return -1;}
+function readLife(id){
+  var L=id.charCodeAt(0)-64,d=(L<10?"0":"")+L+id.slice(1),out=[];
+  for(var k=0;k<10;k++){
+    var a=k,b=k+1,hide=false,boost=false;
+    if(isMod(d[a])){hide=hide||d[a]==="0";boost=boost||d[a]==="5";a=nearest(d,a,-1);if(a<0)a=nearest(d,k+1,1);}
+    if(isMod(d[b])){hide=hide||d[b]==="0";boost=boost||d[b]==="5";var nb=nearest(d,b,1);b=nb<0?nearest(d,k,-1):nb;}
+    var r;
+    if(a<0||b<0||a===b){r={n:"伏位",pct:100};}
+    else r=MAP[d[a]+d[b]];
+    out.push({age:AGES[k],raw:d[k]+d[k+1],n:r.n,pct:r.pct,hide:hide,boost:boost});
+  }
+  return out;
+}
+function renderLife(){
+  var v=$("pid").value.trim().toUpperCase();
+  if(!/^[A-Z][12890]\d{8}$/.test(v)){$("err2").textContent="格式看起來不對喔：英文字母＋9 碼數字。";$("life").innerHTML="";return;}
+  $("err2").textContent="";
+  var rows=readLife(v),h='<div style="margin-top:14px">';
+  rows.forEach(function(r){
+    var S=STARS[r.n],col=r.n==="伏位"?"var(--mist)":S.jx?"var(--good)":"var(--bad)";
+    var t=(r.hide?'<span class="mini h">隱藏</span>':'')+(r.boost?'<span class="mini s">加強</span>':'');
+    h+='<div class="row"><div class="pair" style="width:72px"><b style="font-size:15px;letter-spacing:0">'+r.age+'</b></div><div class="rbody"><div class="rhead"><h3 style="color:'+col+'">'+r.n+'</h3><span class="mini">'+(S.jx?"吉":"凶")+'・'+r.pct+'%</span>'+t+'</div><p>主題：'+S.kw+'。'+(r.hide?"這段能量比較低調。":"")+(r.boost?"這段能量被放大。":"")+'</p></div></div>';
+  });
+  h+='<p style="font-size:12.5px;color:var(--smoke);margin:10px 0 0">簡易版讀法：0、5 往前後找最近的數字配對。身分證屬於敏感資料，請不要公開貼在社群或留言裡。</p></div>';
+  $("life").innerHTML=h;
+  $("pid").value="";
+}
+
+// table
+var tb="";Object.keys(STARS).forEach(function(n){var S=STARS[n];tb+='<tr><td class="st" style="color:'+(n==="伏位"?"var(--smoke)":S.jx?"var(--good)":"var(--bad)")+'">'+n+'・'+(S.jx?"吉":"凶")+'</td><td class="nm">'+(n==="伏位"?"11 22 33 44…":S.pairs.join(" "))+'</td><td>'+S.kw+'</td></tr>';});
+$("tbl").innerHTML=tb;
+
+function run(){if(render($("num").value,false)){$("num").blur();setTimeout(function(){$("result").scrollIntoView({behavior:"smooth",block:"start"});},50);}}
+$("go").onclick=run;
+$("num").addEventListener("keydown",function(e){if(e.key==="Enter")run();});
+$("go2").onclick=renderLife;
+$("pid").addEventListener("keydown",function(e){if(e.key==="Enter")renderLife();});
+render("0912345678",true);
+})();
+</script>
+</body>
+</html>
