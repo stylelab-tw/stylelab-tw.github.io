@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>工具實驗室｜風格研究所</title>
+<meta name="description" content="風格研究所工具實驗室：用 AI 做出來的互動小工具，數字易經八星判斷、組一碗丼飯、短影音報價試算，打開就能玩。">
+<meta property="og:title" content="工具實驗室｜風格研究所">
+<meta property="og:description" content="用 AI 做出來的互動小工具，打開就能玩。">
+<meta property="og:image" content="https://stylelab-tw.github.io/assets/lab/number.jpg">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+@font-face{font-family:"JXL";src:local("jf-jinxuanlatte-2.1 Bold"),local("jf-jinxuanlatte-2.1"),url(assets/lab/lab-title.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"GSL";src:url(assets/lab/lab-body.woff2) format("woff2");font-weight:400;font-display:swap}
+:root{--f-title:"JXL","JX","PingFang TC","Noto Sans TC",sans-serif;--f-body:"GSL","GS","PingFang TC","Noto Sans TC",sans-serif}
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.tool{display:flex;flex-direction:column;text-decoration:none;color:inherit;background:rgba(250,250,249,.78);border:1px solid rgba(255,255,255,.8);border-radius:20px;overflow:hidden;box-shadow:0 14px 34px -20px rgba(72,73,75,.45);transition:transform .2s,box-shadow .2s}
+.tool:hover{transform:translateY(-3px);box-shadow:0 20px 40px -20px rgba(72,73,75,.55)}
+.tool-thumb{aspect-ratio:4/3;background:#D6D6D5;overflow:hidden}
+.tool-thumb img{width:100%;height:100%;object-fit:cover}
+.tool-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tool-cat{font-family:var(--f-tag);font-size:11.5px;letter-spacing:.2em;color:var(--champ);text-transform:uppercase}
+.tool h3{font-family:var(--f-title);font-size:21px;margin:0;line-height:1.4}
+.tool p{margin:0;font-size:14.5px;color:var(--smoke);line-height:1.75}
+.tool .go{margin-top:auto;padding-top:8px;font-family:var(--f-title);font-size:15px;color:var(--charcoal)}
+.tool .go::after{content:" →";color:var(--champ)}
+.tool.soon{background:transparent;border:1.5px dashed rgba(72,73,75,.25);box-shadow:none;justify-content:center;align-items:center;text-align:center;padding:30px;min-height:240px}
+.tool.soon:hover{transform:none}
+.note-sm{font-size:13px;color:var(--smoke);margin-top:26px}
+@media (max-width:900px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.tools{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html" aria-label="風格研究所 首頁"><img src="assets/logo.png" alt="風格研究所 Logo"><span><b>風格研究所</b><small>STYLE LAB</small></span></a>
+    <nav class="links" aria-label="主選單"><a href="works.html">作品集</a><a href="index.html#shop">指令包</a><a href="services.html">服務報價</a><a href="workshop.html">剪輯工作坊</a><a href="lab.html" aria-current="page">工具實驗室</a><a href="index.html#about">關於</a></nav>
+    <a class="btn btn-dark" href="services.html#quote">合作洽詢</a>
+  </div>
+</header>
+<main id="top">
+  <div class="paper hero sub-hero">
+    <div class="light" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="tag">Tool Lab · 工具實驗室</div>
+      <h1>用 AI 做出來的<br>互動小工具，打開就能玩。</h1>
+      <p class="lead">這裡放風格研究所用 AI 做的互動網頁：測一測、組一組、算一算。全部免安裝、手機就能玩，也是我在 AI 課程裡示範的作品。</p>
+    </div>
+  </div>
+
+  <section style="background:var(--ivory)">
+    <div class="wrap">
+      <div class="tools">
+        <a class="tool" href="number/">
+          <div class="tool-thumb"><img src="assets/lab/number.jpg" alt="數字易經八星判斷 預覽" loading="lazy"></div>
+          <div class="tool-body">
+            <span class="tool-cat">測一測</span>
+            <h3>數字易經・八星判斷</h3>
+            <p>輸入手機號碼，30 秒看懂你的吉星、凶星和結尾定調。只在手機上計算，不上傳不儲存。</p>
+            <span class="go">開始玩</span>
+          </div>
+        </a>
+        <a class="tool" href="donburi/">
+          <div class="tool-thumb"><img src="assets/lab/donburi.jpg" alt="組一碗丼飯 預覽" loading="lazy"></div>
+          <div class="tool-body">
+            <span class="tool-cat">組一組</span>
+            <h3>組一碗丼飯</h3>
+            <p>掀開碗蓋，選飯、選肉、加配料，點餐單一路印出來。互動點餐網頁的概念示範，品項價格都是示意。</p>
+            <span class="go">開始玩</span>
+          </div>
+        </a>
+        <a class="tool" href="services.html#quote">
+          <div class="tool-thumb"><img src="assets/lab/quote.jpg" alt="短影音報價試算 預覽" loading="lazy"></div>
+          <div class="tool-body">
+            <span class="tool-cat">算一算</span>
+            <h3>短影音報價試算</h3>
+            <p>回答兩個問題、選要做幾支，報價單馬上印出來，一鍵傳到 LINE。</p>
+            <span class="go">開始試算</span>
+          </div>
+        </a>
+        <div class="tool soon">
+          <div>
+            <span class="tool-cat">Coming soon</span>
+            <h3 style="margin-top:8px">下一個實驗準備中</h3>
+            <p style="margin-top:6px">想看什麼小工具？到 IG 留言告訴我。</p>
+          </div>
+        </div>
+      </div>
+      <p class="note-sm">命理、測驗類工具屬民俗文化與娛樂參考；示範類網頁的品項與價格為示意。</p>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div style="max-width:520px">
+        <div class="tag" style="color:#C2AE9D">Make one for you</div>
+        <h2 style="margin:12px 0 16px">想要一個自己品牌的<br>互動網頁？</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-light" href="https://lin.ee/Q5kmamu" target="_blank" rel="noopener">加入官方 LINE</a><a class="btn btn-ghost" href="works.html">作品集</a></div>
+      </div>
+      <div class="contact">
+        <span><b>風格研究所 STYLE LAB</b></span>
+        <span>Instagram　<a href="https://www.instagram.com/_stylelab.2025/" target="_blank" rel="noopener">@_stylelab.2025</a>・<a href="https://www.instagram.com/zw______/" target="_blank" rel="noopener">@zw______</a></span>
+        <span>作品集　<a href="works.html">stylelab-tw.github.io/works</a>・<a href="https://portaly.cc/zw.weiwei" target="_blank" rel="noopener">Portaly</a></span>
+      </div>
+    </div>
+    <div class="legal"><span>© 2026 風格研究所 Style Lab</span><span>服務條款・隱私權政策・退款說明</span></div>
+  </div>
+</footer>
+</body>
+</html>
