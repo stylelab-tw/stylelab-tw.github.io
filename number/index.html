@@ -162,9 +162,12 @@ footer{font-size:12.5px;color:var(--smoke);text-align:center;padding:10px 0 30px
 
   <section class="card">
     <h2 style="margin-bottom:4px">選配：身分證人生線</h2>
-    <p style="margin:0 0 12px;font-size:14.5px;color:var(--smoke)">想看每個年齡階段的主題？輸入身分證字號（簡易版讀法）。一樣只在你的手機上計算、不上傳不儲存，看完就關掉也沒關係。</p>
+    <p style="margin:0 0 12px;font-size:14.5px;color:var(--smoke)">想看每個年齡階段的主題和建議？輸入身分證字號（簡易版讀法），填年齡會幫你標出現在走到哪一段。一樣只在你的手機上計算、不上傳不儲存，看完就關掉也沒關係。</p>
     <div class="inrow">
       <input id="pid" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="10" placeholder="A123456789" style="font-size:19px">
+    </div>
+    <div class="inrow" style="margin-top:10px">
+      <input id="age" type="tel" inputmode="numeric" autocomplete="off" maxlength="3" placeholder="現在幾歲（選填）" style="font-size:17px;letter-spacing:.04em;font-family:var(--f-body)">
       <button class="btn ghost" id="go2">看人生線</button>
     </div>
     <div class="err" id="err2" role="alert"></div>
@@ -362,6 +365,76 @@ function toast(t){var el=$("toast");el.textContent=t;el.classList.add("on");setT
 
 /* 身分證人生線（簡易版）：字母轉兩碼 A=01…Z=26，共 11 碼兩兩一組 10 組 */
 var AGES=["0–10 歲","11–15 歲","16–20 歲","21–25 歲","26–30 歲","31–35 歲","36–40 歲","41–45 歲","46–50 歲","51 歲以後"];
+var AGE_RANGE=[[0,10],[11,15],[16,20],[21,25],[26,30],[31,35],[36,40],[41,45],[46,50],[51,200]];
+var PHASE=["child","study","study","young","young","prime","prime","prime","prime","mature"];
+var LUCK={"天醫":"財運和貴人","生氣":"人緣和轉機","延年":"事業和專業","伏位":"穩定","絕命":"衝勁","五鬼":"創意","六煞":"人際","禍害":"口才"};
+var PHASE_NAME={child:"童年",study:"求學",young:"出社會",prime:"事業與家庭",mature:"熟齡"};
+var LIFE={
+ "天醫":{
+  child:"從小比較好照顧，常有長輩疼、親戚幫忙，家裡給的資源也比較多。",
+  study:"求學路上常遇到願意提拔你的老師或學長姐，容易拿到獎學金、好機會。",
+  young:"剛出社會就有貴人帶，第一份收入或副業容易起步，感情運也不錯。",
+  prime:"財運旺的一段：收入、合作、投資機會都多，身邊的人願意幫你介紹生意。",
+  mature:"晚年有財有人照顧，累積的人脈會回頭幫你，適合把經驗變成收入。",
+  adv:"把握貴人，但借錢、作保、合夥都要白紙黑字；有錢時先存一筆，別因心軟被拖累。",
+  kid:"大人給的資源多，記得也教孩子分辨好意與利用、學會說不。"},
+ "生氣":{
+  child:"個性開朗、笑容多，人緣好，常是大家喜歡的開心果。",
+  study:"朋友多、社團活躍，考試偶爾失常但總有轉機，補救機會常會出現。",
+  young:"轉機很多的一段：換工作、換跑道常常越換越好，靠人脈找到機會。",
+  prime:"人緣帶來機會，合作、團隊關係順，遇到難關也容易有人拉一把。",
+  mature:"心態輕鬆、朋友多，退休生活不無聊，很適合社團、志工、分享經驗。",
+  adv:"好人緣是本錢，但別太知足而停下來；替自己設一個明確目標，轉機才會變成果。",
+  kid:"玩心重是天性，幫孩子建立固定的作息與小目標就好，不用逼太緊。"},
+ "延年":{
+  child:"從小就懂事、有責任感，常被要求當小大人，也比較早熟。",
+  study:"讀書穩、意志力強，適合當幹部，考試和證照靠實力拿下。",
+  young:"出社會很快被信任、被交辦重要的事，專業累積期，升遷機會好。",
+  prime:"事業的扛霸子：適合當主管、帶團隊、建立專業名聲，但壓力也最大。",
+  mature:"專業被尊敬，適合當顧問、老師、傳承經驗，說話有分量。",
+  adv:"能力強也要懂得分工，別什麼都自己扛；固定運動、留時間給家人，才不會累垮。",
+  kid:"孩子懂事不代表不需要被照顧，多給肯定，別把大人的壓力放在他身上。"},
+ "伏位":{
+  child:"穩穩長大的一段，生活規律、變動少，個性偏安靜慢熱。",
+  study:"按部就班的學習期，成績穩定但不太冒尖，適合打基礎。",
+  young:"蓄勢期：看起來沒什麼大變化，其實是在累積能力和存款。",
+  prime:"穩定期：工作與家庭都偏平穩，適合守成、長期投資、慢慢累積。",
+  mature:"安穩的晚年，生活規律，適合經營長期興趣與健康。",
+  adv:"伏位會延續前一段的能量：前一段是吉星就穩穩守住，是凶星就要主動做改變，別卡住。",
+  kid:"孩子慢熱不是問題，給他時間和穩定的環境就好。"},
+ "絕命":{
+  child:"活潑好動、膽子大，容易碰撞受傷，脾氣來得快去得快。",
+  study:"有衝勁也有叛逆期，容易為了義氣或面子衝動行事。",
+  young:"敢闖的一段：適合創業、挑戰高業績，但花錢也大，容易衝動消費或投資。",
+  prime:"大起大落的一段：機會大、風險也大，投資與事業決策要特別謹慎。",
+  mature:"仍有衝勁，但要注意身體與財務，不要做太冒險的投資。",
+  adv:"重大決定先睡一晚再說；設好預算和停損點，把衝勁用在拚事業、投資自己。",
+  kid:"精力旺盛就讓他運動、比賽，把衝勁導到對的地方，注意安全。"},
+ "五鬼":{
+  child:"聰明、反應快、點子多，好奇心強，也比較坐不住。",
+  study:"學東西快但容易三分鐘熱度，興趣常換，適合多方嘗試。",
+  young:"變動大的一段：工作、住處、計畫常改變，但也是創意最多的時候。",
+  prime:"適合企劃、創意、內容工作，點子能變現；但要小心計畫做不完、合作反覆。",
+  mature:"腦袋靈活、學新東西快，適合學新技能或做有創意的副業。",
+  adv:"點子寫下來，一次只做一件事做到完；重要約定留紀錄，少一點疑心、多一點確認。",
+  kid:"孩子想法多是天賦，陪他把一件事做完，比一直換新的更重要。"},
+ "六煞":{
+  child:"細心敏感、在意別人的感受，人緣好但也容易委屈自己。",
+  study:"桃花與人際比較多，容易為朋友、感情分心，美感與才藝出色。",
+  young:"感情與人際課題多的一段，異性緣好；也適合美業、設計、服務業發揮。",
+  prime:"人際關係是重點：家庭、職場、合作都要花心力經營，情緒管理很重要。",
+  mature:"懂得照顧人、有品味，晚年人際多，要留意別為別人的事煩心。",
+  adv:"先照顧好自己的情緒再照顧別人；人際上設好界線，把美感與服務力變成專長。",
+  kid:"孩子敏感就多聽他說，教他表達情緒，不要只叫他「不要想太多」。"},
+ "禍害":{
+  child:"能言善道、很會講，也比較愛頂嘴，容易因為說話被誤會。",
+  study:"口才好、適合上台、辯論、當代表；要小心同學間的口角是非。",
+  young:"靠說話吃飯的一段：適合業務、講師、直播、內容；也容易因一句話得罪人。",
+  prime:"口才是武器，談判、帶貨、教學都有優勢；但口舌是非、合約糾紛要留意。",
+  mature:"經驗多、很會分享，適合當講師或傳承；要注意說話別太直傷到家人。",
+  adv:"說話先肯定再講問題；把愛講的能量用在教學、直播、銷售，重要的事用文字確認。",
+  kid:"孩子愛講話就給他舞台，同時教他講話的分寸與換位思考。"}
+};
 function nearest(d,i,dir){for(var k=i;k>=0&&k<d.length;k+=dir)if(!isMod(d[k]))return k;return -1;}
 function readLife(id){
   var L=id.charCodeAt(0)-64,d=(L<10?"0":"")+L+id.slice(1),out=[];
@@ -372,21 +445,58 @@ function readLife(id){
     var r;
     if(a<0||b<0||a===b){r={n:"伏位",pct:100};}
     else r=MAP[d[a]+d[b]];
-    out.push({age:AGES[k],raw:d[k]+d[k+1],n:r.n,pct:r.pct,hide:hide,boost:boost});
+    out.push({k:k,age:AGES[k],n:r.n,pct:r.pct,hide:hide,boost:boost});
   }
+  out.forEach(function(r,i){r.eff=r.n;if(r.n==="伏位"&&i>0)r.eff=out[i-1].eff;r.jx=STARS[r.eff].jx;});
   return out;
+}
+function lifeSummary(rows){
+  var g=rows.filter(function(r){return r.jx;}).length;
+  var adult=rows.slice(3);
+  var best=null,watch=null;
+  adult.forEach(function(r){
+    var S=STARS[r.n];
+    if(S.jx&&r.n!=="伏位"){var sc=r.pct+(r.boost?30:0)-(r.hide?20:0);if(!best||sc>best.sc)best={r:r,sc:sc};}
+    if(!S.jx){var sw=r.pct+(r.boost?40:0);if(!watch||sw>watch.sc)watch={r:r,sc:sw};}
+  });
+  var first=halfScore(rows.slice(0,5)),second=halfScore(rows.slice(5));
+  var shape=g===10?"一路吉星，人生整體偏順":first.v<=0&&second.v>0?"前半段磨練多、後半段越走越順":first.v>0&&second.v<0?"前半段順，後半段要守住成果":g<5?"起伏比較大，凶星用對地方就是優勢":"吉凶交錯，在起伏中成長";
+  var s="10 段裡有 "+g+" 段吉星，"+shape+"。";
+  if(best)s+="最旺的是 "+best.r.age+"（"+best.r.n+"），"+LUCK[best.r.n]+"最旺，記得好好把握。";
+  if(watch)s+="要多留意的是 "+watch.r.age+"（"+watch.r.n+"）："+STARS[watch.r.n].care;
+  return s;
+}
+function lifeTrans(prev,cur){
+  if(!prev)return "";
+  if(cur.n==="伏位")return prev.eff==="伏位"?"延續上一段的穩定，繼續打底。":"延續上一段的「"+prev.eff+"」，"+(prev.jx?"好運穩穩接下去。":"要主動做點改變，才不會卡在原地。");
+  if(cur.n===prev.n)return "「"+cur.n+"」連續出現，這個主題會跟著你好幾年，越早學會用它越好。";
+  var a=prev.jx,b=cur.jx;
+  return "從上一段的「"+prev.n+"」走到「"+cur.n+"」："+(a&&b?"順上加順。":!a&&b?"先苦後甜，前面的磨練在這段開花。":a&&!b?"從順境進入考驗，提早準備就不怕。":"挑戰接著挑戰，這段特別需要穩住心態。");
 }
 function renderLife(){
   var v=$("pid").value.trim().toUpperCase();
   if(!/^[A-Z][12890]\d{8}$/.test(v)){$("err2").textContent="格式看起來不對喔：英文字母＋9 碼數字。";$("life").innerHTML="";return;}
   $("err2").textContent="";
+  var ageIn=parseInt($("age").value,10),now=-1;
+  if(ageIn>=0&&ageIn<130)AGE_RANGE.forEach(function(r,i){if(ageIn>=r[0]&&ageIn<=r[1])now=i;});
   var rows=readLife(v),h='<div style="margin-top:14px">';
-  rows.forEach(function(r){
-    var S=STARS[r.n],col=r.n==="伏位"?"var(--mist)":S.jx?"var(--good)":"var(--bad)";
-    var t=(r.hide?'<span class="mini h">隱藏</span>':'')+(r.boost?'<span class="mini s">加強</span>':'');
-    h+='<div class="row"><div class="pair" style="width:72px"><b style="font-size:15px;letter-spacing:0">'+r.age+'</b></div><div class="rbody"><div class="rhead"><h3 style="color:'+col+'">'+r.n+'</h3><span class="mini">'+(S.jx?"吉":"凶")+'・'+r.pct+'%</span>'+t+'</div><p>主題：'+S.kw+'。'+(r.hide?"這段能量比較低調。":"")+(r.boost?"這段能量被放大。":"")+'</p></div></div>';
+  h+='<div class="because" style="margin:0 0 6px"><b style="font-family:var(--f-title)">人生線總覽</b><br>'+esc(lifeSummary(rows))+'</div>';
+  h+='<div class="chain" style="margin:10px 0 6px">';
+  rows.forEach(function(r,i){h+=(i?'<span class="arrow">→</span>':'')+'<span class="chip '+(r.n==="伏位"?"n":STARS[r.n].jx?"g":"b")+'"'+(i===now?' style="outline:2px solid var(--champ);outline-offset:2px"':'')+'>'+r.n+'</span>';});
+  h+='</div>';
+  rows.forEach(function(r,i){
+    var S=STARS[r.n],col=r.n==="伏位"?"var(--mist)":S.jx?"var(--good)":"var(--bad)",ph=PHASE[r.k],T=LIFE[r.n];
+    var t=(r.hide?'<span class="mini h">隱藏</span>':'')+(r.boost?'<span class="mini s">加強</span>':'')+(i===now?'<span class="mini s" style="background:var(--champ);color:#fff">你現在在這段</span>':'');
+    var mod=(r.hide?"這段有 0：能量比較低調，好事不一定馬上看得到，需要時間發酵。":"")+(r.boost?"這段有 5：能量被放大，"+(S.jx?"好運更明顯。":"起伏也更明顯，要多留意。"):"");
+    var main=T.adv;
+    if(r.n==="伏位")main=i===0||rows[i-1].eff==="伏位"?"起步穩，適合慢慢打好基礎，不用急著跟別人比。":rows[i-1].jx?"前一段是吉星「"+rows[i-1].eff+"」，這段穩穩守住成果就好。":"前一段是凶星「"+rows[i-1].eff+"」，這段要主動做點改變，別讓自己卡住。";
+    var adv=(r.k<=2?T.kid+" ":"")+main;
+    h+='<div class="row"'+(i===now?' style="background:rgba(163,140,121,.08);border-radius:12px;padding-left:8px;padding-right:8px"':'')+'><div class="pair" style="width:72px"><b style="font-size:15px;letter-spacing:0">'+r.age+'</b><small>'+PHASE_NAME[ph]+'</small></div><div class="rbody"><div class="rhead"><h3 style="color:'+col+'">'+r.n+'</h3><span class="mini">'+(S.jx?"吉":"凶")+'・'+r.pct+'%</span>'+t+'</div>'+
+      '<p><b>主題</b>　'+S.kw+'</p><p style="margin-top:4px">'+esc(T[ph])+(mod?' '+esc(mod):'')+'</p>'+
+      (i?'<p style="margin-top:4px;color:var(--smoke);font-size:14px">'+esc(lifeTrans(rows[i-1],r))+'</p>':'')+
+      '<p style="margin-top:6px;font-size:14.5px"><span style="color:var(--champ-d);font-family:var(--f-title)">建議</span>　'+esc(adv)+'</p></div></div>';
   });
-  h+='<p style="font-size:12.5px;color:var(--smoke);margin:10px 0 0">簡易版讀法：0、5 往前後找最近的數字配對。身分證屬於敏感資料，請不要公開貼在社群或留言裡。</p></div>';
+  h+='<p style="font-size:12.5px;color:var(--smoke);margin:10px 0 0">簡易版讀法：0、5 往前後找最近的數字配對。民俗文化、娛樂參考，人生還是自己走出來的。身分證屬於敏感資料，請不要公開貼在社群或留言裡。</p></div>';
   $("life").innerHTML=h;
   $("pid").value="";
 }
@@ -400,6 +510,7 @@ $("go").onclick=run;
 $("num").addEventListener("keydown",function(e){if(e.key==="Enter")run();});
 $("go2").onclick=renderLife;
 $("pid").addEventListener("keydown",function(e){if(e.key==="Enter")renderLife();});
+$("age").addEventListener("keydown",function(e){if(e.key==="Enter")renderLife();});
 render("0912345678",true);
 })();
 </script>
